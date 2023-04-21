@@ -1,6 +1,6 @@
 return {
   gopls = " ",
-  sumneko_lua = " ",
+  lua_ls = " ",
   pylance = " ",
   pyright = " ",
   ccls = " ",

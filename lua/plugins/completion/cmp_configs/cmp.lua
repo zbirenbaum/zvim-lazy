@@ -2,8 +2,8 @@ local present, cmp = pcall(require, "cmp")
 if not present then return end
 
 local luasnip = require("luasnip")
--- local lspkind = require("plugins.completion_plugins.cmp_configs.lspkind")
-local symbols = require("plugins.completion_plugins.cmp_configs.symbols")
+-- local lspkind = require("plugins.completion.cmp_configs.lspkind")
+local symbols = require("plugins.completion.cmp_configs.symbols")
 
 local has_copilot, copilot_cmp = pcall(require, "copilot_cmp.comparators")
 
@@ -32,28 +32,6 @@ cmp.setup({
       vim_item.kind = '[' .. symbols[vim_item.kind] .. ']'
       return vim_item
     end
-    -- format = lspkind.cmp_format({
-    --   mode = "symbol_text",
-    --   max_width = 50,
-    --   symbol_map = { Copilot = "" }
-    -- })
-    -- format = lspkind.cmp_format({
-    --   mode = 'symbol',
-    --   maxwidth = '50'
-    -- })
-    -- fields = { "abbr", "kind" },
-    -- format = function (entry, vim_item)
-    --   if not vim_item then return end
-    --   if entry.source.name == "copilot" then
-    --     vim_item.kind = "Copilot"
-    --     vim_item.kind_hl_group = "CmpItemKindCopilot"
-    --     -- return vim_item
-    --   end
-    --   vim_item.kind = string.format("[%s] %s", symbols[vim_item.kind].icon, vim_item.kind)
-    --   vim_item.menu = ""
-      -- vim_item = lspkind.cmp_format({ with_text = false, maxwidth = 50 })(entry, vim_item)
-      -- return vim_item
-    -- end
   },
   window = {
     completion = {
@@ -162,29 +140,3 @@ cmp.setup({
 --set max height of items
 vim.cmd([[ set pumheight=6 ]])
 --set highlights
-local highlights = {
-  -- type highlights
-  CmpItemKindText = { fg = "LightGrey" },
-  CmpItemKindFunction = { fg = "#C586C0" },
-  CmpItemKindClass = { fg = "Orange" },
-  CmpItemKindKeyword = { fg = "#f90c71" },
-  CmpItemKindSnippet = { fg = "#565c64" },
-  CmpItemKindConstructor = { fg = "#ae43f0" },
-  CmpItemKindVariable = { fg = "#9CDCFE", bg = "NONE" },
-  CmpItemKindInterface = { fg = "#f90c71", bg = "NONE" },
-  CmpItemKindFolder = { fg = "#2986cc" },
-  CmpItemKindReference = { fg = "#922b21" },
-  CmpItemKindMethod = { fg = "#C586C0" },
-  CmpItemKindCopilot = { fg = "#6CC644" },
-  -- CmpItemMenu = { fg = "#C586C0", bg = "#C586C0" },
-  CmpItemAbbr = { fg = "#565c64", bg = "NONE" },
-  CmpItemAbbrMatch = { fg = "#569CD6", bg = "NONE" },
-  CmpItemAbbrMatchFuzzy = { fg = "#569CD6", bg = "NONE" },
-  CmpMenuBorder = { fg="#263341" },
-  CmpMenu = { bg="#10171f" },
-  CmpSelection = { bg="#263341" },
-}
-
-for group, hl in pairs(highlights) do
-  vim.api.nvim_set_hl(0, group, hl)
-end

@@ -1,55 +1,33 @@
 local types = require("cmp.types")
-local misc = require("cmp.utils.misc")
-
 local compare = {}
--- local cmp = require "cmp"
--- cmp.setup {
---     -- ... rest of your setup ...
---
---     sorting = {
---         comparators = {
---             cmp.config.compare.offset,
---             cmp.config.compare.exact,
---             cmp.config.compare.score,
---             require "cmp-under-comparator".under,
---             cmp.config.compare.kind,
---             cmp.config.compare.sort_text,
---             cmp.config.compare.length,
---             cmp.config.compare.order,
---         },
---     },
--- }
 
---CompletionItemKind = {}
--- local lookuptable = {
---
--- }
-W = {}
-W.TypeParameter = 1
-W.Method = 2
-W.Variable = 3
-W.Function = 4
-W.Constructor = 5
-W.Field = 6
-W.Class = 6
-W.Interface = 8
-W.Module = 9
-W.Property = 10
-W.Unit = 11
-W.Value = 12
-W.Enum = 13
-W.Keyword = 14
-W.Snippet = 15
-W.Color = 16
-W.File = 17
-W.Reference = 18
-W.Folder = 19
-W.EnumMember = 20
-W.Constant = 21
-W.Struct = 22
-W.Event = 23
-W.Operator = 24
-W.Text = 1
+W = {
+  TypeParameter = 1,
+  Method = 2,
+  Variable = 3,
+  Function = 4,
+  Constructor = 5,
+  Field = 6,
+  Class = 6,
+  Interface = 8,
+  Module = 9,
+  Property = 10,
+  Unit = 11,
+  Value = 12,
+  Enum = 13,
+  Keyword = 14,
+  Snippet = 15,
+  Color = 16,
+  File = 17,
+  Reference = 18,
+  Folder = 19,
+  EnumMember = 20,
+  Constant = 21,
+  Struct = 22,
+  Event = 23,
+  Operator = 24,
+  Text = 1,
+}
 --
 compare.disable_snip = function(entry1, entry2)
   local kind1 = entry1:get_kind()

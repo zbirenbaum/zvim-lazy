@@ -1,5 +1,5 @@
 local M = {}
--- inspect_pos({bufnr}, {row}, {col}, {filter})
+
 M.apply_colors_highlight = function()
 
   local colors = require("colors.scheme")
@@ -86,15 +86,6 @@ M.apply_colors_highlight = function()
   fg("FloatBorder", grey) --changed bc bright blue hurts my eyes after a while
   bg("NormalFloat", darker_black)
 
-  -- Pmenu
-  bg("Pmenu", one_bg)
-  bg("PmenuSbar", one_bg2)
-  bg("PmenuSel", pmenu_bg)
-  bg("PmenuThumb", nord_blue)
-  fg("CmpItemAbbr", white)
-  fg("CmpItemAbbrMatch", white)
-  fg("CmpItemKind", white)
-  fg("CmpItemMenu", white)
   -- fg("LspSignatureActiveParameter", red)
 
   -- misc
@@ -167,10 +158,30 @@ M.apply_colors_highlight = function()
   local hl = vim.api.nvim_set_hl
   hl(0, "TabLineFile",{bg="NONE"})
   hl(0, "TabLine",{bg="#000000"})
-  hl(0, 'Pmenu', {bg='#10171f'})
-  hl(0, 'PmenuSel', {bg='#263341'})
-end
+  hl(0, 'Pmenu', {bg=one_bg})
+  hl(0, 'PmenuSel', {bg=pmenu_bg})
+  hl(0, "PmenuSbar",  {bg=one_bg2})
+  hl(0, "PmenuThumb", {bg=nord_blue})
 
+  hl(0, "CmpItemKindText", {fg=white})
+  hl(0, "CmpItemKindFunction", { fg = "#C586C0" })
+  hl(0, "CmpItemKindClass", { fg = "Orange" })
+  hl(0, "CmpItemKindKeyword", { fg = "#f90c71" })
+  hl(0, "CmpItemKindSnippet", { fg = "#565c64" })
+  hl(0, "CmpItemKindConstructor", { fg = "#ae43f0" })
+  hl(0, "CmpItemKindVariable", { fg = "#9CDCFE", bg = "NONE" })
+  hl(0, "CmpItemKindInterface", { fg = "#f90c71", bg = "NONE" })
+  hl(0, "CmpItemKindFolder", { fg = "#2986cc" })
+  hl(0, "CmpItemKindReference", { fg = "#922b21" })
+  hl(0, "CmpItemKindMethod", { fg = "#C586C0" })
+  hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+  hl(0, "CmpItemAbbr", { fg = "#565c64", bg = "NONE" })
+  hl(0, "CmpItemAbbrMatch", { fg = "#569CD6", bg = "NONE" })
+  hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#569CD6", bg = "NONE" })
+  hl(0, "CmpMenuBorder", { fg="#263341" })
+  hl(0, "CmpMenu", { bg="#10171f" })
+  hl(0, "CmpSelection", { bg="#263341" })
+end
 
 return M
 

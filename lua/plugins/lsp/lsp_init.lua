@@ -1,3 +1,5 @@
+local M = {}
+
 local default_lsp_config = function(attach, capabilities)
   local default_config = {
     on_attach = attach,
@@ -9,25 +11,20 @@ local default_lsp_config = function(attach, capabilities)
   return default_config
 end
 
-local M = {}
 
-M.setup_lsp = function(completion_engine)
-  local lsp_setup = require("plugins.lsp_plugins.nvim_lsp_setup")
+M.setup_lsp = function()
+  local lsp_setup = require("plugins.lsp.nvim_lsp_setup")
   lsp_setup.config_handlers()
   local attach = lsp_setup.attach()
   local capabilities = lsp_setup.setup_capabilities()
-  if not completion_engine then
-    completion_engine = {}
-  end
   local lspconfig = require("lspconfig")
   local default_servers = { "gopls" }
   local custom_servers = {
     "hardhat_vscode",
     "eslint",
-    "sumneko_lua",
+    "lua_ls",
     "bashls",
-    -- "pylance",
-    "pyright",
+    "pylance",
     "clangd",
     "rust_analyzer",
     "html",
@@ -39,7 +36,7 @@ M.setup_lsp = function(completion_engine)
   -- table.insert(custom_servers, package_installed('vue') and 'volar' or 'tsserver')
   local default_config = default_lsp_config(attach, capabilities)
   for _, lsp in ipairs(custom_servers) do
-    local present, config = pcall(require, "plugins.lsp_plugins.lsp_configs." .. lsp)
+    local present, config = pcall(require, "plugins.lsp.lsp_configs." .. lsp)
     if present then
       lspconfig[lsp].setup(config.config_table(attach, capabilities))
     else

@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 local default_servers = { "clangd" }
-local custom_servers = { "pylance", "sumneko_lua" }
+local custom_servers = { "pylance", "lua_ls" }
 
 local M = {}
 

@@ -1,7 +1,7 @@
 local a = vim.api
 local colors = require("colors").get()
 local lsp = require("feline.providers.lsp")
-local C = {}
+local ct = {}
 
 local test_width = function (winid)
   local comp = vim.o.laststatus == 3 and vim.o.columns or a.nvim_win_get_width(tonumber(winid) or 0)
@@ -49,7 +49,7 @@ local chad_mode_hl = function()
   return { fg = mode_colors[vim.fn.mode()][2], bg = empty, }
 end
 
-C.space = function(cond)
+ct.space = function(cond)
   return {
     provider = " ",
     enabled = cond,
@@ -57,7 +57,7 @@ C.space = function(cond)
   }
 end
 
-C.main_icon = {
+ct.main_icon = {
   provider = statusline_style.main_icon,
   hl = { fg = empty, bg = colors.nord_blue, },
   left_sep = {
@@ -67,7 +67,7 @@ C.main_icon = {
 }
 
 
-C.file = {
+ct.file = {
   provider = function()
     local filename = vim.fn.expand("%:t")
     local extension = vim.fn.expand("%:e")
@@ -101,7 +101,7 @@ C.file = {
   },
 }
 
-C.dir = {
+ct.dir = {
   provider = function()
     local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
     return "  " .. dir_name .. " "
@@ -128,7 +128,7 @@ C.dir = {
   },
 }
 
-C.git = {
+ct.git = {
   added = {
     provider = "git_diff_added",
     hl = {
@@ -234,7 +234,7 @@ C.git = {
   },
 }
 
-C.diagnostics = {
+ct.diagnostics = {
   errors = {
     provider = "diagnostic_errors",
     enabled = function()
@@ -275,7 +275,7 @@ C.diagnostics = {
   },
 }
 
-C.progress = {
+ct.progress = {
   provider = function()
     local client = vim.lsp.get_active_clients({buf = a.nvim_get_current_buf()})
     local Lsp = vim.lsp.util.get_progress_messages()[1]
@@ -313,9 +313,9 @@ C.progress = {
   hl = { fg = colors.green, bg = empty },
 }
 
-C.lsp = {
+ct.lsp = {
   provider = function()
-    local icons = require("plugins.lsp_plugins.lsp_configs.langserver_icons")
+    local icons = require("plugins.lsp.lsp_configs.langserver_icons")
     local names = vim.tbl_map(function (client)
       return icons and icons[client.name] or client.name
     end, vim.lsp.get_active_clients({buf = a.nvim_get_current_buf()}))
@@ -326,7 +326,7 @@ C.lsp = {
   hl = { fg = colors.nord_blue, bg = empty },
 }
 
-C.mode = {
+ct.mode = {
   left_sep = {
     provider = statusline_style.left,
     hl = function()
@@ -362,7 +362,7 @@ C.mode = {
   },
 }
 
-C.location = {
+ct.location = {
   left_sep = {
     provider = " " .. statusline_style.left,
     enabled = function(winid)
@@ -442,7 +442,7 @@ local tabline_cond = function()
   return #get_tabs() > 1
 end -- check there is more than 1
 
-C.tabs = {
+ct.tabs = {
   left = {
     provider = ' [',
     enabled = tabline_cond,
@@ -492,4 +492,86 @@ C.tabs = {
   },
 }
 
-return C
+-- local colors = require("colors").get()
+
+local colors = {
+   white = "#abb2bf",
+   darker_black = "#1b1f27",
+   black = "#1e222a", --  nvim bg
+   black2 = "#252931",
+   one_bg = "#282c34", -- real bg of onedark
+   one_bg2 = "#353b45",
+   one_bg3 = "#30343c",
+   grey = "#42464e",
+   grey_fg = "#565c64",
+   grey_fg2 = "#6f737b",
+   light_grey = "#6f737b",
+   red = "#d47d85",
+   baby_pink = "#DE8C92",
+   pink = "#ff75a0",
+   line = "#2a2e36", -- for lines like vertsplit
+   green = "#A3BE8C",
+   vibrant_green = "#7eca9c",
+   nord_blue = "#81A1C1",
+   blue = "#61afef",
+   yellow = "#e7c787",
+   sun = "#EBCB8B",
+   purple = "#b4bbc8",
+   dark_purple = "#c882e7",
+   teal = "#519ABA",
+   orange = "#fca2aa",
+   cyan = "#a3b8ef",
+   statusline_bg = "#22262e",
+   lightbg = "#2d3139",
+   lightbg2 = "#262a32",
+   pmenu_bg = "#A3BE8C",
+   folder_bg = "#61afef",
+}
+
+local components = {
+  active = {},
+  inactive = {},
+}
+
+components.active[1] = {  --left
+  ct.mode.mode_string,
+  ct.dir,
+  ct.file,
+  ct.lsp,
+  ct.diagnostics.errors,
+  ct.diagnostics.warnings,
+  ct.diagnostics.hints,
+  ct.diagnostics.info,
+  ct.diagnostics.spacer,
+}
+
+components.active[2] = {  -- right
+  ct.git.branch,
+  ct.git.added,
+  ct.git.changed,
+  ct.git.removed,
+  ct.tabs.left,
+  ct.tabs.inactive_left,
+  ct.tabs.active,
+  ct.tabs.inactive_right,
+  ct.tabs.right,
+  ct.location.loc_icon,
+  ct.location.loc_string,
+}
+
+components.inactive[1] = {
+  provider = " ",
+  hl = {
+    fg = colors.one_bg2,
+    bg = "NONE",
+    style = "underline",
+  }
+}
+
+require("feline").setup({
+  colors = {
+    bg = colors.statusline_bg,
+    fg = colors.fg,
+  },
+  components = components,
+})
