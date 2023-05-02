@@ -64,6 +64,7 @@ local plugins = {
   },
   {
    "neovim/nvim-lspconfig",
+   event = {'VimEnter'},
     config = function()
       require("plugins.lsp.lsp_init").setup_lsp()
     end,
@@ -104,9 +105,13 @@ local plugins = {
   },
   {
    "zbirenbaum/copilot-cmp",
+   branch = 'formatting-fixes',
     config = function ()
       require("copilot_cmp").setup()
-    end
+    end,
+    dependencies = {
+      'hrsh7th/nvim-cmp',
+    }
   },
   {
    "zbirenbaum/neodim",
