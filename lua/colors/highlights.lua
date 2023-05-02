@@ -158,11 +158,12 @@ M.apply_colors_highlight = function()
   local hl = vim.api.nvim_set_hl
   hl(0, "TabLineFile",{bg="NONE"})
   hl(0, "TabLine",{bg="#000000"})
-  hl(0, 'Pmenu', {bg=one_bg})
-  hl(0, 'PmenuSel', {bg=pmenu_bg})
+  hl(0, 'Pmenu', {bg='#10171f'})
+  hl(0, 'PmenuSel', {bg='#263341'})
   hl(0, "PmenuSbar",  {bg=one_bg2})
   hl(0, "PmenuThumb", {bg=nord_blue})
 
+  -- Pmenu
   hl(0, "CmpItemKindText", {fg=white})
   hl(0, "CmpItemKindFunction", { fg = "#C586C0" })
   hl(0, "CmpItemKindClass", { fg = "Orange" })

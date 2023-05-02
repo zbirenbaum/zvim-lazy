@@ -20,7 +20,8 @@ M.setup_lsp = function()
   local lspconfig = require("lspconfig")
   local default_servers = { "gopls" }
   local custom_servers = {
-    "hardhat_vscode",
+    "graphql",
+    "solidity",
     "eslint",
     "lua_ls",
     "bashls",

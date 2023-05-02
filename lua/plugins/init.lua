@@ -2,6 +2,18 @@ local plugins = {
   { "lewis6991/impatient.nvim"},
   { "wbthomason/packer.nvim"},
   {
+    'kevinhwang91/nvim-ufo',
+    event = 'LspAttach',
+    dependencies ='kevinhwang91/promise-async'
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    keys = { '<A-n>' },
+    config = function ()
+      require('plugins.other.nvim_tree')
+    end
+  },
+  {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
@@ -59,6 +71,7 @@ local plugins = {
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "zbirenbaum/copilot.lua",
     }
   },
   {
@@ -76,7 +89,6 @@ local plugins = {
   },
   {
    "zbirenbaum/copilot.lua",
-    event = "VeryLazy",
     config = function()
       require("copilot").setup({
         suggestion = { enabled = false },
@@ -93,9 +105,7 @@ local plugins = {
   {
    "zbirenbaum/copilot-cmp",
     config = function ()
-      require("copilot_cmp").setup({
-        clear_after_cursor=true,
-      })
+      require("copilot_cmp").setup()
     end
   },
   {
@@ -235,12 +245,6 @@ local plugins = {
       require("matchparen").setup({})
     end,
   },
-  -- {
-  --   'EdenEast/nightfox.nvim',
-  --   config = function ()
-  --     require('plugins.other.nightfox')
-  --   end
-  -- },
   {
    "zbirenbaum/nvim-base16.lua",
     config = function()

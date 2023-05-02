@@ -24,7 +24,7 @@ end
 
 o.showcmd = false
 o.showmode = false
-o.lazyredraw = 1
+o.lazyredraw = true
 o.shadafile = vim.fn.expand('$HOME') .. "/.local/share/nvim/shada/main.shada"
 o.pumheight = 6
 o.pumwidth = 12
