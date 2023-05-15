@@ -28,7 +28,7 @@ local plugins = {
     end,
   },
   {
-   "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope.nvim",
     lazy = true,
     cmd = {"Telescope"},
     keys = { '<leader>ff', '<leader>fg', },
@@ -38,7 +38,7 @@ local plugins = {
   },
   { "nvim-telescope/telescope-fzy-native.nvim"},
   {
-   "ggandor/flit.nvim",
+    "ggandor/flit.nvim",
     -- disable = false,
     keys = { 'f', 'F', 't', 'T' },
     config = function()
@@ -49,7 +49,7 @@ local plugins = {
     end,
   },
   {
-   "ggandor/leap.nvim",
+    "ggandor/leap.nvim",
     keys = {'x', 's', 'X', 'S'},
     config = function()
       require("plugins.other.leap")
@@ -59,12 +59,12 @@ local plugins = {
   {'tpope/vim-repeat'},
   -- LSP and Completion
   {
-   "jose-elias-alvarez/typescript.nvim",
+    "jose-elias-alvarez/typescript.nvim",
     lazy = true,
   },
   {
-   "neovim/nvim-lspconfig",
-   event = {'VimEnter'},
+    "neovim/nvim-lspconfig",
+    event = {'VimEnter'},
     config = function()
       require("plugins.lsp.lsp_init").setup_lsp()
     end,
@@ -76,7 +76,7 @@ local plugins = {
     }
   },
   {
-   "L3MON4D3/LuaSnip",
+    "L3MON4D3/LuaSnip",
     lazy = true,
     config = function()
       local luasnip = require("luasnip")
@@ -89,7 +89,7 @@ local plugins = {
     end,
   },
   {
-   "zbirenbaum/copilot.lua",
+    "zbirenbaum/copilot.lua",
     config = function()
       require("copilot").setup({
         suggestion = { enabled = false },
@@ -104,24 +104,20 @@ local plugins = {
     end,
   },
   {
-   "zbirenbaum/copilot-cmp",
-   branch = 'formatting-fixes',
+    "zbirenbaum/copilot-cmp",
     config = function ()
       require("copilot_cmp").setup()
     end,
-    dependencies = {
-      'hrsh7th/nvim-cmp',
-    }
   },
   {
-   "zbirenbaum/neodim",
+    "zbirenbaum/neodim",
     event = {"LspAttach"},
     config = function ()
       require("neodim").setup()
     end
   },
   {
-   "hrsh7th/nvim-cmp",
+    "hrsh7th/nvim-cmp",
     event = { "InsertEnter", "CursorHold" },
     config = function()
       require("plugins.completion.cmp_configs.cmp")
@@ -135,7 +131,7 @@ local plugins = {
     },
   },
   {
-   "ray-x/lsp_signature.nvim",
+    "ray-x/lsp_signature.nvim",
     config = function()
       require("plugins.completion.cmp_configs.lspsignature_cmp")
     end,
@@ -151,7 +147,7 @@ local plugins = {
     end,
   },
   {
-   "folke/trouble.nvim",
+    "folke/trouble.nvim",
     cmd = {"Trouble", "TroubleToggle", "TroubleRefresh", "TroubleClose"},
     lazy = true,
     config = function()
@@ -159,19 +155,19 @@ local plugins = {
     end,
   },
   {
-   "kylechui/nvim-surround",
+    "kylechui/nvim-surround",
     config = function ()
       require("nvim-surround").setup()
     end,
   },
   {
-   "windwp/nvim-autopairs",
+    "windwp/nvim-autopairs",
     config = function()
       require("plugins.completion.autopairs")
     end,
   },
   {
-   "NvChad/nvterm",
+    "NvChad/nvterm",
     keys = {'<C-l>', '<A-h>', '<A-v>', '<A-i>'},
     config = function ()
       require('nvterm').setup()
@@ -179,21 +175,21 @@ local plugins = {
     end
   },
   {
-   "max397574/better-escape.nvim",
+    "max397574/better-escape.nvim",
     event = "InsertCharPre",
     config = function()
       require("plugins.other.better_escape")
     end,
   },
   {
-   "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter",
     config = function()
       require("plugins.other.treesitter")
     end,
     dependencies = {'nvim-treesitter/playground'},
   },
   {
-   "numToStr/Comment.nvim",
+    "numToStr/Comment.nvim",
     keys = { "gcc", "<leader>/" },
     lazy = false,
     config = function()
@@ -202,62 +198,62 @@ local plugins = {
     end,
   },
   {
-   "nvim-neorg/neorg",
+    "nvim-neorg/neorg",
     ft = "norg",
     config = function()
       require("plugins.other.neorg")
     end,
   },
   {
-   "nvim-lua/plenary.nvim",
+    "nvim-lua/plenary.nvim",
     lazy = true,
     "nvim-lua/plenary.nvim"
   },
   {
-   "kyazdani42/nvim-web-devicons",
+    "kyazdani42/nvim-web-devicons",
     lazy = true,
     config = function()
       require("plugins.other.icons").setup()
     end,
   },
   {
-   "lukas-reineke/indent-blankline.nvim",
+    "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
     config = function()
       require("plugins.other.indent_blankline")
     end,
   },
   {
-   "feline-nvim/feline.nvim",
+    "feline-nvim/feline.nvim",
     event = "VeryLazy",
     config = function()
       require("plugins.other.feline")
     end,
   },
   {
-   "gennaro-tedesco/nvim-jqx",
+    "gennaro-tedesco/nvim-jqx",
     cmd = {"JqxList", "JqxQuery"},
   },
   {
-   "lewis6991/gitsigns.nvim",
+    "lewis6991/gitsigns.nvim",
     config = function()
       require("plugins.other.gitsigns")
     end,
   },
   {
-   "monkoose/matchparen.nvim",
+    "monkoose/matchparen.nvim",
     config = function()
       require("matchparen").setup({})
     end,
   },
   {
-   "zbirenbaum/nvim-base16.lua",
+    "zbirenbaum/nvim-base16.lua",
     config = function()
       require("colors").init('onedark')
     end,
   },
   {
-   "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap",
     lazy = true,
     keys = {
       "<Leader>b",

@@ -24,6 +24,8 @@ require("nvim-treesitter.configs").setup({
     "json",
     "regex",
     "yaml",
+    "solidity",
+    "markdown",
   },
   indent = {
     enable = false,
@@ -31,4 +33,17 @@ require("nvim-treesitter.configs").setup({
   highlight = {
     enable = true,
   },
+})
+
+vim.api.nvim_create_autocmd({'BufNewFile'}, {
+  callback=function(args)
+    vim.api.nvim_create_autocmd({'InsertEnter'}, {
+      pattern = args.name,
+      callback = function ()
+        vim.cmd('TSBufEnable highlight');
+      end,
+      once = true
+    })
+  end,
+  once = false,
 })
