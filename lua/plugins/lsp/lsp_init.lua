@@ -11,7 +11,6 @@ local default_lsp_config = function(attach, capabilities)
   return default_config
 end
 
-
 M.setup_lsp = function()
   local lsp_setup = require("plugins.lsp.nvim_lsp_setup")
   lsp_setup.config_handlers()
@@ -25,7 +24,7 @@ M.setup_lsp = function()
     "eslint",
     "lua_ls",
     "bashls",
-    "pylance",
+    "pylyzer",
     "clangd",
     "rust_analyzer",
     "html",
