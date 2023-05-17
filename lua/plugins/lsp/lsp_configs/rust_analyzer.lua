@@ -11,74 +11,91 @@ local function reload_workspace(bufnr)
   end)
 end
 
+local function get_workspace_dir(cmd)
+  local co = assert(coroutine.running())
+
+  local stdout = {}
+  local stderr = {}
+  local jobid = vim.fn.jobstart(cmd, {
+    on_stdout = function(_, data, _)
+      data = table.concat(data, '\n')
+      if #data > 0 then
+        stdout[#stdout + 1] = data
+      end
+    end,
+    on_stderr = function(_, data, _)
+      stderr[#stderr + 1] = table.concat(data, '\n')
+    end,
+    on_exit = function()
+      coroutine.resume(co)
+    end,
+    stdout_buffered = true,
+    stderr_buffered = true,
+  })
+
+  if jobid <= 0 then
+    vim.notify(
+      ('[lspconfig] cmd (%q) failed:\n%s'):format(table.concat(cmd, ' '), table.concat(stderr, '')),
+      vim.log.levels.WARN
+    )
+    return
+  end
+
+  coroutine.yield()
+  if next(stdout) == nil then
+    return nil
+  end
+  stdout = vim.json.decode(table.concat(stdout, ''))
+  return stdout and stdout['workspace_root'] or nil
+end
+
+local default_config = {
+  default_config = {
+    cmd = { 'rust-analyzer' },
+    filetypes = { 'rust' },
+    root_dir = function(fname)
+      local cargo_crate_dir = util.root_pattern 'Cargo.toml'(fname)
+      local cmd = { 'cargo', 'metadata', '--no-deps', '--format-version', '1' }
+      if cargo_crate_dir ~= nil then
+        cmd[#cmd + 1] = '--manifest-path'
+        cmd[#cmd + 1] = util.path.join(cargo_crate_dir, 'Cargo.toml')
+      end
+
+      local cargo_workspace_root = get_workspace_dir(cmd)
+
+      if cargo_workspace_root then
+        cargo_workspace_root = util.path.sanitize(cargo_workspace_root)
+      end
+
+      return cargo_workspace_root
+        or cargo_crate_dir
+        or util.root_pattern 'rust-project.json'(fname)
+        or util.find_git_ancestor(fname)
+    end,
+  },
+  commands = {
+    CargoReload = {
+      function()
+        reload_workspace(0)
+      end,
+      description = 'Reload current cargo workspace',
+    },
+  },
+}
 M.config_table = function (attach, capabilities)
   return {
-    default_config = {
-      cmd = { 'rust-analyzer' },
-      filetypes = { 'rust' },
-      attach = attach,
-      capabilities = capabilities,
-      root_dir = function(fname)
-        local cargo_crate_dir = util.root_pattern 'Cargo.toml'(fname)
-        local cmd = { 'cargo', 'metadata', '--no-deps', '--format-version', '1' }
-        if cargo_crate_dir ~= nil then
-          cmd[#cmd + 1] = '--manifest-path'
-          cmd[#cmd + 1] = util.path.join(cargo_crate_dir, 'Cargo.toml')
-        end
-        local cargo_metadata = ''
-        local cargo_metadata_err = ''
-        local cm = vim.fn.jobstart(cmd, {
-          on_stdout = function(_, d, _)
-            cargo_metadata = table.concat(d, '\n')
-          end,
-          on_stderr = function(_, d, _)
-            cargo_metadata_err = table.concat(d, '\n')
-          end,
-          stdout_buffered = true,
-          stderr_buffered = true,
-        })
-        if cm > 0 then
-          cm = vim.fn.jobwait({ cm })[1]
-        else
-          cm = -1
-        end
-        local cargo_workspace_dir = nil
-        if cm == 0 then
-          cargo_workspace_dir = vim.fn.json_decode(cargo_metadata)['workspace_root']
-        else
-          vim.notify(
-            string.format('[lspconfig] cmd (%q) failed:\n%s', table.concat(cmd, ' '), cargo_metadata_err),
-            vim.log.levels.WARN
-          )
-        end
-        return cargo_workspace_dir
-          or cargo_crate_dir
-          or util.root_pattern 'rust-project.json'(fname)
-          or util.find_git_ancestor(fname)
-      end,
-      settings = {
-        ['rust-analyzer'] = {},
-      },
-    },
-    commands = {
-      CargoReload = {
-        function()
-          reload_workspace(0)
-        end,
-        description = 'Reload current cargo workspace',
-      },
-    },
-    docs = {
-      description = [[
-  https://github.com/rust-analyzer/rust-analyzer
-  rust-analyzer (aka rls 2.0), a language server for Rust
-  See [docs](https://github.com/rust-analyzer/rust-analyzer/tree/master/docs/user#settings) for extra settings.
-      ]],
-      default_config = {
-        root_dir = [[root_pattern("Cargo.toml", "rust-project.json")]],
-      },
-    },
+    root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),
+    on_attach = attach,
+    capabilities = capabilities,
+    settings = {
+      ['rust-analyzer'] = {
+        diagnostics = {
+          enable = false;
+        }
+      }
+    }
   }
 end
+
 
 return M
