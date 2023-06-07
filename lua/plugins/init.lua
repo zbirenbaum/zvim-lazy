@@ -1,4 +1,13 @@
 local plugins = {
+  {
+    "willothy/flatten.nvim",
+    opts = require('plugins.other.flatten'),
+    cond = function ()
+      return not os.getenv("NVIM") ~= nil
+    end,
+    lazy = false,
+    priority = 1001,
+  },
   { "lewis6991/impatient.nvim"},
   { "wbthomason/packer.nvim"},
   {
@@ -200,14 +209,15 @@ local plugins = {
   {
     "nvim-neorg/neorg",
     ft = "norg",
+    build = ":Neorg sync-parsers",
     config = function()
       require("plugins.other.neorg")
     end,
+    dependencies={'kyazdani42/nvim-web-devicons', 'nvim-lua/plenary.nvim'}
   },
   {
     "nvim-lua/plenary.nvim",
     lazy = true,
-    "nvim-lua/plenary.nvim"
   },
   {
     "kyazdani42/nvim-web-devicons",

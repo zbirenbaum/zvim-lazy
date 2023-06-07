@@ -1,4 +1,5 @@
 local present, cmp = pcall(require, "cmp")
+
 if not present then return end
 
 local luasnip = require("luasnip")
@@ -73,16 +74,16 @@ cmp.setup({
       }),
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false,
+      behavior = cmp.ConfirmBehavior.Insert,
+      -- select = false,
     }),
-    ["<Tab>"] = vim.schedule_wrap(function(fallback)
+    ["<Tab>"] = function (fallback)
       if cmp.visible() and has_words_before() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
       else
         fallback()
       end
-    end),
+    end,
     ["<S-Tab>"] = vim.schedule_wrap(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
@@ -96,9 +97,9 @@ cmp.setup({
     ghost_text = true,
   },
   sources = {
-    { name = "copilot", group_index = 2 },
-    { name = "nvim_lsp", group_index = 2 },
-    { name = "path", group_index = 2 },
+    { name = "copilot", group_index = 1 },
+    { name = "nvim_lsp", group_index = 1 },
+    { name = "path", group_index = 1 },
     { name = 'neorg', group_index = 2 },
 
     -- keep disabled
@@ -114,13 +115,13 @@ cmp.setup({
     comparators = {
       -- order matters here
       cmp.config.compare.exact,
-      has_copilot and copilot_cmp.prioritize or nil,
-      has_copilot and copilot_cmp.score or nil,
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
       cmp.config.compare.locality,
+      has_copilot and copilot_cmp.prioritize or nil,
+      has_copilot and copilot_cmp.score or nil,
       cmp.config.compare.kind,
       cmp.config.compare.sort_text,
       cmp.config.compare.length,

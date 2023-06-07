@@ -16,5 +16,5 @@ require('utils.set_globals')
 
 local plugins = require('plugins')
 require('lazy').setup({
-  plugins, {}
+  plugins, {},
 })

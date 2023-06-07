@@ -7,14 +7,15 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.smartindent = true
   end,
 })
-vim.opt_local.breakindentopt = 'list:-1'
-vim.opt_local.formatlistpat = [[^\s*[-~\*]\+\s\+]]
+
+-- vim.opt_local.breakindentopt = 'list:-1'
+-- vim.opt_local.formatlistpat = [[^\s*[-~\*]\+\s\+]]
 require("neorg").setup({
   load = {
     ["core.defaults"] = {},
-    ["core.integrations.treesitter"] = {},
-    ["core.norg.concealer"] = {},
-    ["core.norg.completion"] = {config = {engine = 'nvim-cmp'}},
-    ["core.integrations.nvim-cmp"] = {},
+    -- ["core.integrations.treesitter"] = {},
+    ["core.concealer"] = {},
+    ["core.completion"] = {config = {engine = 'nvim-cmp'}},
+    -- ["core.integrations.nvim-cmp"] = {},
   },
 })
