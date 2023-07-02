@@ -38,6 +38,7 @@ local state = { prev_input = nil }
 --
 local function custom_motion(kwargs)
   require('leap').opts.safe_labels = {}
+
   local function get_input()
     vim.cmd('echo ""')
     local hl = require('leap.highlight')
@@ -99,8 +100,14 @@ local function custom_motion(kwargs)
 
   -- local get_targets = require('leap.search')['get-targets']
   local input = get_input()
+
+  if not input then
+    return {}
+  end
+
   local pattern = get_pattern(input)
   local targets = get_targets(pattern, {})
+
   for _, target in ipairs(targets) do
     local extmark_pos = tostring(target.pos[1]) .. ':' .. tostring(target.pos[2])
     extmarks[extmark_pos] = {
@@ -118,7 +125,9 @@ local function custom_motion(kwargs)
       })
     }
   end
+
   local input2 = get_input()
+
   if input2 then
     input = input .. input2
   else
