@@ -53,7 +53,7 @@ local function custom_motion(kwargs)
     end
     -- Repeat with the previous input?
     local repeat_key = require('leap.opts').special_keys.repeat_search
-    if ch == api.nvim_replace_termcodes(repeat_key, true, true, true) then
+    if repeat_key and ch == api.nvim_replace_termcodes(repeat_key, true, true, true) then
       if state.prev_input then
         ch = state.prev_input
       else
