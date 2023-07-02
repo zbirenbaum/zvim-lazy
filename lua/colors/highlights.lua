@@ -1,9 +1,9 @@
+local colors = require("colors.scheme")
+local hl = vim.api.nvim_set_hl
+
 local M = {}
 
 M.apply_colors_highlight = function()
-
-  local colors = require("colors.scheme")
-
   local black = colors.black
   local black2 = colors.black2
   local blue = colors.blue
@@ -27,135 +27,98 @@ M.apply_colors_highlight = function()
   local dark_purple = colors.dark_purple
   local one_bg3 = colors.one_bg3
 
-  -- functions for setting highlights
-  local fg = function(group, color, sp)
-    local hl = { fg = color }
-    if sp ~= nil then
-      if type(sp) == "string" then hl[sp] = true
-      else for _, v in ipairs(sp) do hl[v] = true end
-      end
-    end
-    vim.api.nvim_set_hl(0, group, hl)
-  end
-
-  local bg = function(group, color, sp)
-    local hl = { bg = color }
-    if sp ~= nil then
-      hl[sp] = true
-    end
-    vim.api.nvim_set_hl(0, group, hl)
-  end
-
-  local fg_bg = function(group, fg_color, bg_color, sp)
-    local hl = { fg = fg_color, bg = bg_color }
-    if sp ~= nil then
-      hl[sp] = true
-    end
-    vim.api.nvim_set_hl(0, group, hl)
-  end
-
   -- vim.api.nvim_set_hl(0, "TSVariable", { fg = colors.white })
-  -- fg("TSContant", orange, "bold")
-  -- fg("TSParameter", orange, {"italic", "bold"})
-  -- fg("TSRepeat", sun, {"bold"})
+  -- fg("TSContant", orange, bold=true)
+  -- vim.api.nvim_set_hl(0, "TSParameter", {fg=orange, italic=true, bold=true})
+  -- vim.api.nvim_set_hl(0, "TSRepeat", {fg=sun, bold=true})
   -- fg("TSKeyword", dark_purple)
 
-  vim.api.nvim_set_hl(0, "@variable", { fg = colors.white })
-  fg("@constant", orange)
-  fg("@parameter", orange, {"italic", "bold"})
-  fg("@repeat", sun, {"bold"})
-  fg("@keyword", dark_purple)
-  -- fg("TSKeywordFunction", blue, "bold")
-  -- fg("TSConditional", purple, "bold")
+  hl(0, "@variable", { fg = colors.white })
+  hl(0, "@constant", {fg=orange})
+  hl(0, "@parameter", {fg=orange, italic=true, bold=true})
+  hl(0, "@repeat", {fg=sun, bold=true})
+  hl(0, "@keyword", {fg=dark_purple})
+  -- fg("TSKeywordFunction", blue, bold=true)
+  -- fg("TSConditional", purple, bold=true)
 
   -- Comments
-  vim.api.nvim_set_hl(0, "TSComment", { fg = grey_fg, italic = true, bold = true })
-  vim.api.nvim_set_hl(0, "Comment", { fg = grey_fg, italic = true, bold = true })
+  hl(0, "TSComment", { fg = grey_fg, italic = true, bold = true })
+  hl(0, "Comment", { fg = grey_fg, italic = true, bold = true })
 
   -- Disable cursor line
   -- cmd("hi clear CursorLine")
   -- Line number
-  bg("CursorLine", black )
-  -- fg("cursorlinenr", white)
-  vim.api.nvim_set_hl(0, "CursorLineNR", {fg=dark_purple, italic=false, bold=true})
+  hl(0, "CursorLine", {bg=black})
+  -- hl(0, "cursorlinenr", {fg=white})
+  hl(0, "CursorLineNR", {fg=dark_purple, italic=false, bold=true})
 
   -- same it bg, so it doesn't appear
-  fg("EndOfBuffer", black)
+  hl(0, "EndOfBuffer", {fg=black})
 
   -- For floating windows
-  fg("FloatBorder", grey) --changed bc bright blue hurts my eyes after a while
-  bg("NormalFloat", darker_black)
+  hl(0, "FloatBorder", {fg=grey}) --changed bc bright blue hurts my eyes after a while
+  hl(0, "NormalFloat", {bg=darker_black})
 
-  -- fg("LspSignatureActiveParameter", red)
+  -- hl(0, "LspSignatureActiveParameter", {fg=red})
 
   -- misc
 
   -- inactive statuslines as thin lines
-  fg("StatusLineNC", one_bg3, "underline")
-
-  fg("LineNr", grey)
-  fg("NvimInternalError", red)
-  fg("VertSplit", one_bg2)
-
-  bg("Folded", "NONE")
-  fg("Folded", "NONE")
-  fg("Comment", grey)
-  fg_bg("Normal", white, "NONE") --due to api replacing undefineds, needs to be set
-
-  -- [[ Plugin Highlights
-
-  -- Dashboard
-  fg("AlphaHeader", grey_fg)
-  fg("AlphaButtons", light_grey)
+  hl(0, "StatusLineNC", {fg=one_bg3, underline=true})
+  hl(0, "LineNr", {fg=grey})
+  hl(0, "NvimInternalError", {fg=red})
+  hl(0, "VertSplit", {fg=one_bg2})
+  hl(0, "Folded", {bg="NONE"})
+  hl(0, "Folded", {fg="NONE"})
+  hl(0, "Comment", {fg=grey})
+  hl(0, "Normal", {fg=white, bg="NONE"}) --due to api replacing undefineds, needs to be set
 
   -- Git signs
-  fg_bg("DiffAdd", blue, "NONE")
-  fg_bg("DiffChange", grey_fg, "NONE")
-  fg_bg("DiffChangeDelete", red, "NONE")
-  fg_bg("DiffModified", red, "NONE")
-  fg_bg("DiffDelete", red, "NONE")
-  fg_bg("SignColumn", 'NONE', 'NONE')
+  hl(0, "DiffAdd", {fg=blue, bg="NONE"})
+  hl(0, "DiffChange", {fg=grey_fg, bg="NONE"})
+  hl(0, "DiffChangeDelete", {fg=red, bg="NONE"})
+  hl(0, "DiffModified", {fg=red, bg="NONE"})
+  hl(0, "DiffDelete", {fg=red, bg="NONE"})
+  hl(0, "SignColumn", {fg='NONE', bg='NONE'})
 
   -- Indent blankline plugin
-  fg("IndentBlanklineChar", line)
-  fg("IndentBlanklineSpaceChar", line)
+  hl(0, "IndentBlanklineChar", {fg=line})
+  hl(0, "IndentBlanklineSpaceChar", {fg=line})
 
   -- Lsp diagnostics
 
-  fg("DiagnosticHint", purple)
-  fg("DiagnosticError", red)
-  fg("DiagnosticWarn", yellow)
-  fg("DiagnosticInformation", green)
+  hl(0, "DiagnosticHint", {fg=purple})
+  hl(0, "DiagnosticError", {fg=red})
+  hl(0, "DiagnosticWarn", {fg=yellow})
+  hl(0, "DiagnosticInformation", {fg=green})
 
   -- Telescope
-  fg_bg("TelescopeBorder", darker_black, darker_black)
-  fg_bg("TelescopePromptBorder", black2, black2)
+  hl(0, "TelescopeBorder", {fg=darker_black, bg=darker_black})
+  hl(0, "TelescopePromptBorder", {fg=black2, bg=black2})
 
-  fg_bg("TelescopePromptNormal", white, black2)
-  fg_bg("TelescopePromptPrefix", red, black2)
+  hl(0, "TelescopePromptNormal", {fg=white, bg=black2})
+  hl(0, "TelescopePromptPrefix", {fg=red, bg=black2})
 
-  bg("TelescopeNormal", darker_black)
+  hl(0, "TelescopeNormal", {bg=darker_black})
 
-  fg_bg("TelescopePreviewTitle", black, green)
-  fg_bg("TelescopePromptTitle", black, red)
-  fg_bg("TelescopeResultsTitle", darker_black, darker_black)
+  hl(0, "TelescopePreviewTitle", {fg=black, bg=green})
+  hl(0, "TelescopePromptTitle", {fg=black, bg=red})
+  hl(0, "TelescopeResultsTitle", {fg=darker_black, bg=darker_black})
 
-  bg("TelescopeSelection", black2)
+  hl(0, "TelescopeSelection", {bg=black2})
 
   -- Disable some highlight in nvim tree if transparency enabled
-  bg("NormalFloat", "NONE")
-  -- telescope
-  bg("TelescopeBorder", "NONE")
-  bg("TelescopePrompt", "NONE")
-  bg("TelescopeResults", "NONE")
-  bg("TelescopePromptBorder", "NONE")
-  bg("TelescopePromptNormal", "NONE")
-  bg("TelescopeNormal", "NONE")
-  bg("TelescopePromptPrefix", "NONE")
-  fg("TelescopeBorder", one_bg)
-  fg_bg("TelescopeResultsTitle", black, blue)
+  hl(0, "NormalFloat", {bg="NONE"})
+  hl(0, "TelescopeBorder", {bg="NONE"})
+  hl(0, "TelescopePrompt", {bg="NONE"})
+  hl(0, "TelescopeResults", {bg="NONE"})
+  hl(0, "TelescopePromptBorder", {bg="NONE"})
+  hl(0, "TelescopePromptNormal", {bg="NONE"})
+  hl(0, "TelescopeNormal", {bg="NONE"})
+  hl(0, "TelescopePromptPrefix", {bg="NONE"})
+  hl(0, "TelescopeBorder", {fg=one_bg})
+  hl(0, "TelescopeResultsTitle", {fg=black, bg=blue})
 
-  local hl = vim.api.nvim_set_hl
   hl(0, "TabLineFile",{bg="NONE"})
   hl(0, "TabLine",{bg="#000000"})
   hl(0, 'Pmenu', {bg='#10171f'})
@@ -185,24 +148,3 @@ M.apply_colors_highlight = function()
 end
 
 return M
-
-  -- -- NvimTree
-  -- fg("NvimTreeEmptyFolderName", folder_bg)
-  -- fg("NvimTreeEndOfBuffer", darker_black)
-  -- fg("NvimTreeFolderIcon", folder_bg)
-  -- fg("NvimTreeFolderName", folder_bg)
-  -- fg("NvimTreeGitDirty", red)
-  -- fg("NvimTreeIndentMarker", one_bg2)
-  -- bg("NvimTreeNormal", darker_black)
-  -- bg("NvimTreeNormalNC", darker_black)
-  -- fg("NvimTreeOpenedFolderName", folder_bg)
-  -- fg("NvimTreeRootFolder", red, "underline") -- enable underline for root folder in nvim tree
-  -- fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
-  -- fg_bg("NvimTreeVertSplit", darker_black, darker_black)
-  -- fg_bg("NvimTreeWindowPicker", red, black2)
-
-  -- transparency
-  -- bg("NvimTreeNormal", "NONE")
-  -- bg("NvimTreeNormalNC", "NONE")
-  -- bg("NvimTreeStatusLineNC", "NONE")
-  -- fg_bg("NvimTreeVertSplit", grey, "NONE")

@@ -9,7 +9,6 @@ local plugins = {
     priority = 1001,
   },
   { "lewis6991/impatient.nvim"},
-  { "wbthomason/packer.nvim"},
   {
     'kevinhwang91/nvim-ufo',
     event = 'LspAttach',
