@@ -25,9 +25,10 @@ M.setup_lsp = function()
     "lua_ls",
     "bashls",
     "pylance",
+    -- "ccls",
     -- "pylyzer",
     "clangd",
-    "rust_analyzer",
+    -- "rust_analyzer",
     "html",
   }
   local has_plugin, _ = pcall(require, 'typescript')

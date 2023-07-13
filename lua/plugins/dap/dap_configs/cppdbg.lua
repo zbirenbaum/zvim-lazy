@@ -5,6 +5,10 @@ local mason_path = table.concat({
   "/mason",
   "/bin"
 })
+local function get_file()
+  return vim.fn.input("Path to executable: " .. vim.fn.getcwd() .. "/" .. "file")
+end
+
 dap.adapters.cppdbg = {
   id = 'cppdbg',
   type = 'executable',
@@ -17,7 +21,7 @@ dap.configurations.cpp = {
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      return get_file()
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = true,
@@ -38,7 +42,7 @@ dap.configurations.cpp = {
     miDebuggerPath = "/usr/bin/gdb",
     cwd = "${workspaceFolder}",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      return get_file()
     end,
     setupCommands = {
       {

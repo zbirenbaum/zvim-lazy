@@ -36,6 +36,13 @@ local plugins = {
     end,
   },
   {
+    'simrat39/rust-tools.nvim',
+    ft = {'rust'},
+    config = function ()
+      require('plugins.lsp.rust_tools')
+    end
+  },
+  {
     "nvim-telescope/telescope.nvim",
     lazy = true,
     cmd = {"Telescope"},
@@ -149,7 +156,8 @@ local plugins = {
     config = function()
       require("neodev").setup({
         library = {
-          plugins = false,
+          -- plugins = { "nvim-dap-ui" }, types = true
+          plugins = false
         }
       })
     end,
@@ -277,6 +285,14 @@ local plugins = {
       require("utils.mappings").debug()
     end,
   },
+  -- {
+  --   'rcarriga/nvim-dap-ui',
+  --   lazy=true,
+  --   config = function()
+  --     require('dapui').setup()
+  --     require('plugins.dap.dap_setup').config_dapui()
+  --   end
+  -- },
   { "jbyuki/one-small-step-for-vimkind", lazy = true },
   { "mxsdev/nvim-dap-vscode-js", lazy = true },
 }

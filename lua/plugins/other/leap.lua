@@ -2,6 +2,22 @@ local keymap = vim.keymap
 local leap = require('leap')
 local api = vim.api
 
+local get_char_at = function (_2_, _4_)
+  local _arg_3_ = _2_
+  local line = _arg_3_[1]
+  local byte_col = _arg_3_[2]
+  local _arg_5_ = _4_
+  local char_offset = _arg_5_["char-offset"]
+  local line_str = vim.fn.getline(line)
+  local char_idx = vim.fn.charidx(line_str, (byte_col - 1))
+  local char_nr = vim.fn.strgetchar(line_str, (char_idx + (char_offset or 0)))
+  if (char_nr ~= -1) then
+    return vim.fn.nr2char(char_nr)
+  else
+    return nil
+  end
+end
+
 local ns = vim.api.nvim_create_namespace('leap_custom')
 local prio = 65535
 
@@ -85,7 +101,6 @@ local function custom_motion(kwargs)
   local function get_targets(pattern, max)
     local search = require('leap.search')
     local bounds = search['get-horizontal-bounds']()
-    local get_char_at = require('leap.util')['get-char-at']
     local match_positions = search['get-match-positions'](
       pattern, bounds, { ['backward?'] = kwargs.cc.backward }
     )

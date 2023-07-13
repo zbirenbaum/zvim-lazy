@@ -1,13 +1,7 @@
-local get_config = require('plugins.dap.dap_configs.vscode_js')
-
 local M = {}
 
-M.config = function()
-  local adapters = { "python", "lua", "ccpp", "vscode_js"} --list your adapters here
-  for _, adapter in ipairs(adapters) do
-    require("plugins.dap.dap_configs." .. adapter)
-  end
-
+local function config_js ()
+  local get_config = require('plugins.dap.dap_configs.vscode_js')
   require("dap-vscode-js").setup({
     debugger_path = vim.fn.expand('$HOME') .. '/Progfiles/microsoft/vscode-js-debug',
     adapters = {
@@ -25,20 +19,20 @@ M.config = function()
   end
 end
 
-return M
+M.config = function()
+  --"cppdbg"-or "codelldb"
+  local adapters = { "python", "lua", "codelldb", "vscode_js"} --list your adapters here
+  for _, adapter in ipairs(adapters) do
+    require("plugins.dap.dap_configs." .. adapter)
+  end
+  config_js()
+end
 
---if you do not want to use dapui, specific widget windows can be loaded via lua instead like so
--- vim.api.nvim_set_keymap("n", "<Leader>s", '<Cmd>lua require"plugins.dap_configs.widget_config".load_scope_in_sidebar()<CR>', {
---    silent = true,
---    noremap = true,
--- })
--- where plugins.dap_configs.widget_config contains:
--- M = {}
--- local widgets = require('dap.ui.widgets')
---
--- M.load_scope_in_sidebar = function ()
---   local my_sidebar = widgets.sidebar(widgets.scopes)
---   my_sidebar.toggle()
--- end
---
--- return M
+M.config_dapui = function ()
+  local dap, dapui = require("dap"), require("dapui")
+  dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+  dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+  dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+end
+
+return M
