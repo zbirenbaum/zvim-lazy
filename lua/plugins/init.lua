@@ -55,7 +55,11 @@ local plugins = {
   {
     "ggandor/flit.nvim",
     -- disable = false,
-    keys = { 'f', 'F', 't', 'T' },
+    keys = function ()
+      return vim.tbl_map(function(key)
+        return { key, mode = { "n", "v", "x", "o" } }
+      end, { 'f', 'F', 't', 'T' })
+    end,
     config = function()
       require('flit').setup({
         multiline = true,
@@ -65,7 +69,11 @@ local plugins = {
   },
   {
     "ggandor/leap.nvim",
-    keys = {'x', 's', 'X', 'S'},
+    keys = function ()
+      return vim.tbl_map(function(key)
+        return { key, mode = { "n", "v", "x", "o" } }
+      end, {'x', 's', 'X', 'S'})
+    end,
     config = function()
       require("plugins.other.leap")
     end,
@@ -107,14 +115,20 @@ local plugins = {
     "zbirenbaum/copilot.lua",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = {
-          enabled = true,
-          layout = {
-            position = "bottom",
-            size = 0.4
-          }
+        suggestion = {
+          enabled = false,
+          auto_trigger = false,
+          debounce = 75,
+          keymap = {
+            accept = "<M-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
         },
+        copilot_node_command = "/home/zach/.config/nvm/versions/node/v18.15.0/bin/node",
       })
     end,
   },
@@ -124,13 +138,13 @@ local plugins = {
       require("copilot_cmp").setup()
     end,
   },
-  {
-    "zbirenbaum/neodim",
-    event = {"LspAttach"},
-    config = function ()
-      require("neodim").setup()
-    end
-  },
+  -- {
+  --   "futsuuu/neodim",
+  --   event = {"LspAttach"},
+  --   config = function ()
+  --     require("neodim").setup()
+  --   end
+  -- },
   {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter", "CursorHold" },
@@ -236,6 +250,8 @@ local plugins = {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
+    commit = '9637670896b68805430e2f72cf5d16be5b97a22a',
+    -- main = "ibl",
     config = function()
       require("plugins.other.indent_blankline")
     end,

@@ -1,5 +1,21 @@
 local get_config = function (options)
   local config = {
+    ['ts-node'] = {
+      type = "pwa-node",
+      request = "launch",
+      name = "Debug Typescript",
+      -- trace = true, -- include debugger info
+      runtimeExecutable = "yarn",
+      runtimeArgs = {
+        "ts-node",
+        vim.fn.expand("%"),
+      },
+      -- rootPath = "${workspaceFolder}",
+      cwd = "${workspaceFolder}",
+      console = "integratedTerminal",
+      resolveSourceMapLocations = { "${workspaceFolder}/dist/**/*.js", "${workspaceFolder}/**", "!**/node_modules/**" },
+      internalConsoleOptions = "neverOpen",
+    },
     test = {
       type = "pwa-node",
       request = "launch",

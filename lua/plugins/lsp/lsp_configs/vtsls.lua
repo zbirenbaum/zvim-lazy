@@ -1,8 +1,8 @@
 local util = require 'lspconfig.util'
-local mason_dir = vim.fn.stdpath('data')
+local mason_dir = vim.fn.stdpath('data') .. '/mason/bin'
 
 -- local bin_name = mason_dir .. '/typescript-language-server'
-local bin_name = mason_dir .. '/typescript-language-server'
+local bin_name = mason_dir .. '/vtsls'
 local cmd = { bin_name, '--stdio' }
 
 local M = {}
@@ -13,9 +13,9 @@ M.config_table = function(attach, capabilities)
       hostInfo = 'neovim',
       logVerbosity = 'verbose',
       preferences = {
-			  includeCompletionsForModuleExports = false,
-        -- disableSuggestions = true,
-        -- noGetErrOnBackgroundUpdate = true,
+			  -- includeCompletionsForModuleExports = false,
+        disableSuggestions = true,
+        noGetErrOnBackgroundUpdate = true,
       },
     },
     cmd = cmd,

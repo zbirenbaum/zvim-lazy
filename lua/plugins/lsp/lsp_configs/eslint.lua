@@ -1,5 +1,6 @@
 local util = require 'lspconfig.util'
 local lsp = vim.lsp
+local mason_path = vim.fn.stdpath("data") .. "/mason/bin"
 local M = {}
 
 local function fix_all(opts)
@@ -33,7 +34,7 @@ local function fix_all(opts)
   })
 end
 
-local bin_name = 'vscode-eslint-language-server'
+local bin_name = mason_path .. '/vscode-eslint-language-server'
 local cmd = { bin_name, '--stdio' }
 
 if vim.fn.has 'win32' == 1 then

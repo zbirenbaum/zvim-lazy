@@ -1,8 +1,8 @@
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")
 
-local bin_name = "pylance-langserver"
-local cmd = { bin_name, "--stdio" }
+local bin_name = "/home/zach/Progfiles/pylance/extension/dist/server.formatted.js"
+local cmd = {"node", bin_name, "--stdio" }
 -- client.server_capabilities.executeCommandProvider
 local _commands = {
   "pyright.createtypestub",
@@ -173,6 +173,9 @@ require("lspconfig.configs").pylance = {
     settings = {
       python = {
         analysis = {
+          extraPaths = {
+            "/home/zach/Dev/open-source/testing/chroma/",
+          },
           indexing = true,
           typeCheckingMode = "basic",
           diagnosticMode = "workspace",

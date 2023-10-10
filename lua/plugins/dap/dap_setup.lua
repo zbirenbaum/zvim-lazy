@@ -14,7 +14,7 @@ local function config_js ()
   })
 
   for _, language in ipairs({ "typescript", "javascript" }) do
-    local opt = get_config({ 'launch', 'test' })
+    local opt = get_config({ 'launch', 'test', 'ts-node' })
     require("dap").configurations[language] = opt
   end
 end

@@ -1,15 +1,11 @@
 local present, cmp = pcall(require, "cmp")
-
 if not present then return end
-
 local luasnip = require("luasnip")
--- local lspkind = require("plugins.completion.cmp_configs.lspkind")
 local symbols = require("plugins.completion.cmp_configs.symbols")
-
-local has_copilot, copilot_cmp = pcall(require, "copilot_cmp.comparators")
+local copilot_cmp = require("copilot_cmp.comparators")
 
 local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  if vim.api.nvim_get_option_value("buftype", {buf=0}) == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
 end
@@ -94,7 +90,6 @@ cmp.setup({
   },
   experimental = {
     native_menu = false,
-    ghost_text = true,
   },
   sources = {
     { name = "copilot", group_index = 1 },
@@ -116,12 +111,12 @@ cmp.setup({
       -- order matters here
       cmp.config.compare.exact,
       cmp.config.compare.offset,
+      copilot_cmp.prioritize,
+      copilot_cmp.score,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
       cmp.config.compare.locality,
-      has_copilot and copilot_cmp.prioritize or nil,
-      has_copilot and copilot_cmp.score or nil,
       cmp.config.compare.kind,
       cmp.config.compare.sort_text,
       cmp.config.compare.length,
