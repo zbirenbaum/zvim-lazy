@@ -69,62 +69,61 @@ ct.main_icon = {
 
 ct.file = {
   provider = function()
-    local filename = vim.fn.expand("%:t")
-    local extension = vim.fn.expand("%:e")
-    local icon = require("nvim-web-devicons").get_icon(filename, extension)
-    if filename == nil or filename == "" or filename == " " then
-      return ""
-    end
-    if icon == nil then
-      return " " .. filename .. " "
-    end
-    return " " .. icon .. " " .. filename .. " "
+    local fname = vim.api.nvim_buf_get_name(0)
+    return "  " .. vim.fn.fnamemodify(fname, ":.")
   end,
-  enabled = test_width,
-  hl = function () return {
-    fg = vim.bo.modified and '#cab873' or colors.white,
-    bg = colors.lightbg,
-  } end,
-  left_sep = {
-    str = sep_spaces.left,
-    hl = {
-      fg = colors.lightbg,
-      bg = empty,
-    },
-  },
-  right_sep = {
-    str = " ",
-    hl = {
-      fg = colors.lightbg,
-      bg = empty,
-    },
-  },
-}
-
-ct.dir = {
-  provider = function()
-    local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-    return "  " .. dir_name .. " "
-  end,
-
   enabled = test_width,
   hl = {
     fg = colors.cyan,
-    bg = colors.lightbg,
+    bg = empty,
+    bold = true,
+    -- bg = colors.lightbg,
   },
-  left_sep = {
-    str = " " .. statusline_style.left,
-    hl = {
-      fg = colors.lightbg,
-      bg = empty,
-    },
-  },
-  right_sep = {
-    str = sep_spaces.right,
-    hl = {
-      fg = colors.lightbg,
-      bg = empty,
-    },
+  -- left_sep = {
+  --   str = sep_spaces.left,
+  --   hl = {
+  --     fg = colors.lightbg,
+  --     bg = empty,
+  --   },
+  -- },
+  -- right_sep = {
+  --   str = " ",
+  --   hl = {
+  --     fg = colors.lightbg,
+  --     bg = empty,
+  --   },
+  -- },
+}
+
+ct.dir = {
+  -- left_sep = {
+  --   str = " " .. statusline_style.left,
+  --   hl = {
+  --     fg = colors.lightbg,
+  --     bg = empty,
+  --   },
+  -- },
+  -- right_sep = {
+  --   str = sep_spaces.right,
+  --   hl = {
+  --     fg = colors.lightbg,
+  --     bg = empty,
+  --   },
+  -- },
+}
+
+ct.relpath = {
+  provider = function()
+    if vim.fn.expand("%:p") == "" then
+      return ""
+    end
+    return vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.:h") .. '/'
+  end,
+  enabled = test_width,
+  hl = {
+    fg = colors.grey_fg2,
+    bg = empty
+    -- bg = colors.lightbg,
   },
 }
 
@@ -536,8 +535,8 @@ local components = {
 components.active[1] = {  --left
   ct.mode.mode_string,
   ct.dir,
+  -- ct.relpath,
   ct.file,
-  ct.lsp,
   ct.diagnostics.errors,
   ct.diagnostics.warnings,
   ct.diagnostics.hints,
@@ -546,6 +545,7 @@ components.active[1] = {  --left
 }
 
 components.active[2] = {  -- right
+  ct.lsp,
   ct.git.branch,
   ct.git.added,
   ct.git.changed,

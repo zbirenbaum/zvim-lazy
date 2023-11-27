@@ -31,19 +31,19 @@ require("nvim-treesitter.configs").setup({
     enable = false,
   },
   highlight = {
-    enable = true,
+    enable = false,
   },
 })
 
-vim.api.nvim_create_autocmd({'BufNewFile'}, {
-  callback=function(args)
-    vim.api.nvim_create_autocmd({'InsertEnter'}, {
-      pattern = args.name,
-      callback = function ()
-        vim.cmd('TSBufEnable highlight');
-      end,
-      once = true
-    })
-  end,
-  once = false,
-})
+-- vim.api.nvim_create_autocmd({'BufNewFile'}, {
+--   callback=function(args)
+--     vim.api.nvim_create_autocmd({'InsertEnter'}, {
+--       pattern = args.name,
+--       callback = function ()
+--         vim.cmd('TSBufEnable highlight');
+--       end,
+--       once = true
+--     })
+--   end,
+--   once = false,
+-- })

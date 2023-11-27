@@ -6,13 +6,15 @@ M.config_table = function(attach, capabilities)
       plugins = false,
     }
   })
+  local mason_path = vim.fn.stdpath("data") .. "/mason"
   --local sumneko_root_path = vim.fn.getenv "HOME" .. "/sumneko_lua"
-  local sumneko_root_path = "/usr/share/lua-language-server" --/usr/share/lua-language-server"
-  local sumneko_binary = "/usr/bin/lua-language-server"
+  local cmd = mason_path .. '/bin/lua-language-server' --/usr/share/lua-language-server"
+  -- local sumneko_binary = "/usr/bin/lua-language-server"
 
   return {
 
-    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    cmd = { cmd },
+    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     on_attach = attach,
     capabilities = capabilities,
     completion = { callSnippet = "Both" },

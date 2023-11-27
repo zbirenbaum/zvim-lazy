@@ -62,8 +62,8 @@ M.terminal_mappings = function ()
 end
 
 M.terminal = function()
-  maps("t", "<esc>", [[<C-\><C-n>]], opts)
-  maps("t", "jk", "<esc>", opts)
+  -- maps("t", "<esc>", [[<C-\><C-n>]], opts)
+  -- maps("t", "jk", "<esc>", opts)
   maps("t", "<C-w>h", [[<C-\><C-n><C-W>h]], opts)
   maps("t", "<C-w>j", [[<C-\><C-n><C-W>j]], opts)
   maps("t", "<C-w>k", [[<C-\><C-n><C-W>k]], opts)

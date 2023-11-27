@@ -1,5 +1,17 @@
 local plugins = {
   {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function ()
+      require('colors.tokyonight').setup()
+    end
+  },
+  {
+    "sindrets/diffview.nvim",
+    lazy = true,
+  },
+  {
     "willothy/flatten.nvim",
     opts = require('plugins.other.flatten'),
     cond = function ()
@@ -46,12 +58,12 @@ local plugins = {
     "nvim-telescope/telescope.nvim",
     lazy = true,
     cmd = {"Telescope"},
-    keys = { '<leader>ff', '<leader>fg', },
+    keys = { '<leader>ff', '<leader>fg', '<leader>fG' },
     config = function()
       require("plugins.other.telescope")
     end,
   },
-  { "nvim-telescope/telescope-fzy-native.nvim"},
+  {"nvim-telescope/telescope-fzy-native.nvim"},
   {
     "ggandor/flit.nvim",
     -- disable = false,
@@ -139,7 +151,7 @@ local plugins = {
     end,
   },
   -- {
-  --   "futsuuu/neodim",
+  --   "zbirenbaum/neodim",
   --   event = {"LspAttach"},
   --   config = function ()
   --     require("neodim").setup()
@@ -282,7 +294,7 @@ local plugins = {
   {
     "zbirenbaum/nvim-base16.lua",
     config = function()
-      require("colors").init('onedark')
+      -- require("colors").init('onedark')
     end,
   },
   {
