@@ -30,6 +30,9 @@ M.config_handlers = function()
     local function lspSymbol(name, icon)
       local hl = "DiagnosticSign" .. name
       vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
+      vim.diagnostic.config({
+        severity_sort = true,
+      })
     end
     lspSymbol("Error", "")
     lspSymbol("Info", "")

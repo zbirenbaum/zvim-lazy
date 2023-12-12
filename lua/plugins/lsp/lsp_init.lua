@@ -12,6 +12,7 @@ local default_lsp_config = function(attach, capabilities)
 end
 
 M.setup_lsp = function()
+  require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config, optional but recommended
   local lsp_setup = require("plugins.lsp.nvim_lsp_setup")
   lsp_setup.config_handlers()
   local attach = lsp_setup.attach()
@@ -19,26 +20,23 @@ M.setup_lsp = function()
   local lspconfig = require("lspconfig")
   local default_servers = { "gopls" }
   local custom_servers = {
-    -- "graphql",
     "solidity",
-    -- "eslint",
     "lua_ls",
     "bashls",
     "pylance",
     "ccls",
-    -- "pylyzer",
     "clangd",
-    -- "rust_analyzer",
     "html",
     "arduino_language_server",
     "prismals",
     "vtsls"
+    -- "efm",
+    -- "graphql",
+    -- "eslint",
+    -- "pylyzer",
+    -- "rust_analyzer",
+    -- "tsserver",
   }
-  -- local has_plugin, _ = pcall(require, 'typescript')
-  -- if has_plugin then
-    -- require('typescript').setup({ server = { on_attach = attach } })
-  -- end
-  -- table.insert(custom_servers, package_installed('vue') and 'volar' or 'tsserver')
   local default_config = default_lsp_config(attach, capabilities)
   for _, lsp in ipairs(custom_servers) do
     local present, config = pcall(require, "plugins.lsp.lsp_configs." .. lsp)

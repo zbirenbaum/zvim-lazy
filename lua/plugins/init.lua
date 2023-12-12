@@ -1,5 +1,29 @@
 local plugins = {
   {
+    'nvimtools/none-ls.nvim',
+    filetypes = require('plugins.lsp.none_ls'),
+    config = function ()
+      require('plugins.lsp.none_ls').setupNLS()
+    end,
+    dependencies = "nvimtools/none-ls.nvim"
+  },
+  {
+    'MunifTanjim/eslint.nvim',
+    filetypes = require('plugins.lsp.none_ls'),
+    config = function ()
+      require('plugins.lsp.none_ls').setupESLint()
+    end,
+    dependencies = "nvimtools/none-ls.nvim"
+  },
+  {
+    'MunifTanjim/prettier.nvim',
+    filetypes = require('plugins.lsp.none_ls'),
+    config = function ()
+      require('plugins.lsp.none_ls').setupPrettier()
+    end,
+    dependencies = "nvimtools/none-ls.nvim"
+  },
+  {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
@@ -107,6 +131,7 @@ local plugins = {
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "yioneko/nvim-vtsls",
       "zbirenbaum/copilot.lua",
     }
   },
@@ -140,7 +165,7 @@ local plugins = {
             dismiss = "<C-]>",
           },
         },
-        copilot_node_command = "/home/zach/.config/nvm/versions/node/v18.15.0/bin/node",
+        copilot_node_command = vim.fn.expand("$HOME") .. "/.volta/tools/image/node/18.15.0/bin/node"
       })
     end,
   },

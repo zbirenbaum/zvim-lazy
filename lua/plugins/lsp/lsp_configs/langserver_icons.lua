@@ -9,4 +9,7 @@ return {
   solidity_ls = "ﲹ ",
   solidity = "ﲹ ",
   tsserver = " ",
+  eslint = " ",
+  vtsls = " ",
+  ["null-ls"] = "󰟢 "
 }

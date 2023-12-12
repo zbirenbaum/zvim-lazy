@@ -10,12 +10,12 @@ if vim.fn.expand('$DISPLAY') ~= "$DISPLAY" then
   g.clipboard = {
     name = "unnamedplus",
     copy = {
-      ["+"] = "xclip -i -selection clipboard",
-      ["*"] = "xclip -i -selection primary",
+      ["+"] = "pbcopy",
+      ["*"] = "pbcopy",
     },
     paste = {
-      ["+"] = "xclip -o -selection clipboard",
-      ["*"] = "xclip -o -selection primary",
+      ["+"] = "pbpaste",
+      ["*"] = "pbpaste",
     },
     cache_enabled = 0,
   }
@@ -67,7 +67,7 @@ opt.shortmess:append "sI"
 g.mapleader = " "
 g.loaded_matchparen = 1
 g.python_host_skip_check = 1
-g.python3_host_prog = vim.fn.expand('$HOME') .. "/.virtualenvs/py3nvim/bin/python";
+g.python3_host_prog = "/usr/bin/python3";
 g.mouse = "";
 
 if vim.fn.filereadable(g.python3_host_prog) == 0 then

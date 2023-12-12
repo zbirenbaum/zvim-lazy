@@ -47,6 +47,16 @@ M.debug = function()
   end, opts)
 end
 
+M.terminal_keys = {
+  horizontal = '<C-t>h',
+  vertical = '<C-t>v',
+  float = '<C-t>i',
+}
+
+M.get_terminal_keys = function ()
+  return vim.tbl_values(M.terminal_keys)
+end
+
 M.terminal_mappings = function ()
   local ft_cmds = {
     python = "python3 " .. vim.fn.expand('%'),
@@ -54,9 +64,9 @@ M.terminal_mappings = function ()
   local toggle_modes = {'n', 't'}
   local mappings = {
     { 'n', '<C-l>', function () require("nvterm.terminal").send(ft_cmds[vim.bo.filetype]) end },
-    { toggle_modes, '<A-h>', function () require("nvterm.terminal").toggle('horizontal') end },
-    { toggle_modes, '<A-v>', function () require("nvterm.terminal").toggle('vertical') end },
-    { toggle_modes, '<A-i>', function () require("nvterm.terminal").toggle('float') end },
+    { toggle_modes, M.terminal_keys.horizontal, function () require("nvterm.terminal").toggle('horizontal') end },
+    { toggle_modes, M.terminal_keys.vertical, function () require("nvterm.terminal").toggle('vertical') end },
+    { toggle_modes, M.terminal_keys.float, function () require("nvterm.terminal").toggle('float') end },
   }
   return mappings
 end

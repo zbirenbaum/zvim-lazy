@@ -1,5 +1,26 @@
 local get_config = function (options)
   local config = {
+    ['backend-brm'] = {
+      type = "pwa-node",
+      request = "launch",
+      name = "Debug API",
+      -- trace = true, -- include debugger info
+      runtimeExecutable = "npm",
+      runtimeArgs = {
+        "run",
+        "dev",
+        "-w",
+        "api"
+      },
+      cwd = "/Users/zach/Dev/brm",
+      console = "integratedTerminal",
+      resolveSourceMapLocations = {
+        "${workspaceFolder}/dist/**/*.js",
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      },
+      internalConsoleOptions = "neverOpen",
+    },
     ['ts-node'] = {
       type = "pwa-node",
       request = "launch",
