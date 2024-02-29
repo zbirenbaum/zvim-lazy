@@ -47,6 +47,11 @@ local plugins = {
       })
     end,
   },
+  -- {
+  --   'mrcjkb/rustaceanvim',
+  --   version = '^4', -- Recommended
+  --   ft = { 'rust' },
+  -- },
   {
     'simrat39/rust-tools.nvim',
     ft = {'rust'},

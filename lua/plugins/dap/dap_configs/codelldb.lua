@@ -1,5 +1,6 @@
 local dap = require("dap")
 
+
 dap.adapters.codelldb = {
   type = 'server',
   port = "13000",
@@ -14,7 +15,8 @@ local standard_cfg = {
   type = "codelldb",
   request = "launch",
   program = function()
-    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    return '/home/zach/Dev/tracemachina/nativelink/target/debug/deps/filesystem_store_test-cbada86aad1fcc16'
+    -- return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
   end,
   cwd = '${workspaceFolder}',
   stopOnEntry = false,
