@@ -35,17 +35,17 @@ default = {
       name = "html",
     },
     jpeg = {
-      icon = "",
+      icon = "󰈥",
       color = default.colors.dark_purple,
       name = "jpeg",
     },
     jpg = {
-      icon = "",
+      icon = "󰈥",
       color = default.colors.dark_purple,
       name = "jpg",
     },
     js = {
-      icon = "",
+      icon = "",
       color = default.colors.sun,
       name = "js",
     },
@@ -55,7 +55,7 @@ default = {
       name = "kt",
     },
     lock = {
-      icon = "",
+      icon = "",
       color = default.colors.red,
       name = "lock",
     },
@@ -100,7 +100,7 @@ default = {
       name = "toml",
     },
     ts = {
-      icon = "ﯤ",
+      icon = " ",
       color = default.colors.teal,
       name = "ts",
     },

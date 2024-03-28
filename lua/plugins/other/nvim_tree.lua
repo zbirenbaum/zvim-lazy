@@ -7,4 +7,4 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
-vim.keymap.set('n', '<A-n>', '<cmd>NvimTreeToggle<cr>')
+vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<cr>')

@@ -70,7 +70,7 @@ ct.main_icon = {
 ct.file = {
   provider = function()
     local fname = vim.api.nvim_buf_get_name(0)
-    return "  " .. vim.fn.fnamemodify(fname, ":.")
+    return " 󰉖 " .. vim.fn.fnamemodify(fname, ":.")
   end,
   enabled = test_width,
   hl = {
@@ -241,7 +241,7 @@ ct.diagnostics = {
     end,
 
     hl = { bg = empty, fg = colors.red },
-    icon = "  ",
+    icon = " 󰅙 ",
   },
   warnings = {
     provider = "diagnostic_warnings",
@@ -257,7 +257,7 @@ ct.diagnostics = {
       return lsp.diagnostics_exist("HINT")
     end,
     hl = { bg = empty, fg = colors.grey_fg2 },
-    icon = "  ",
+    icon = " 󰌵 ",
   },
   info = {
     provider = "diagnostic_info",
@@ -265,7 +265,7 @@ ct.diagnostics = {
       return lsp.diagnostics_exist("INFO")
     end,
     hl = { bg = empty, fg = colors.green },
-    icon = "  ",
+    icon = " 󰋼 ",
   },
 
   spacer = {

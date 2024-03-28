@@ -23,6 +23,7 @@ local overrides = {
   ["CmpMenuBorder"] = { fg="#263341" },
   ["CmpMenu"] = { bg="#10171f" },
   ["CmpSelection"] = { bg="#263341" },
+  ["WinSeparator"] = {fg = "#263341"}
 }
 
 local setup = function ()

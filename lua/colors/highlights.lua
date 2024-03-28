@@ -93,19 +93,19 @@ M.apply_colors_highlight = function()
   hl(0, "DiagnosticInformation", {fg=green})
 
   -- Telescope
-  hl(0, "TelescopeBorder", {fg=darker_black, bg=darker_black})
-  hl(0, "TelescopePromptBorder", {fg=black2, bg=black2})
-
-  hl(0, "TelescopePromptNormal", {fg=white, bg=black2})
-  hl(0, "TelescopePromptPrefix", {fg=red, bg=black2})
-
-  hl(0, "TelescopeNormal", {bg=darker_black})
-
-  hl(0, "TelescopePreviewTitle", {fg=black, bg=green})
-  hl(0, "TelescopePromptTitle", {fg=black, bg=red})
-  hl(0, "TelescopeResultsTitle", {fg=darker_black, bg=darker_black})
-
-  hl(0, "TelescopeSelection", {bg=black2})
+  -- hl(0, "TelescopeBorder", {fg=darker_black, bg=darker_black})
+  -- hl(0, "TelescopePromptBorder", {fg=black2, bg=black2})
+  --
+  -- hl(0, "TelescopePromptNormal", {fg=white, bg=black2})
+  -- hl(0, "TelescopePromptPrefix", {fg=red, bg=black2})
+  --
+  -- hl(0, "TelescopeNormal", {bg=darker_black})
+  --
+  -- hl(0, "TelescopePreviewTitle", {fg=black, bg=green})
+  -- hl(0, "TelescopePromptTitle", {fg=black, bg=red})
+  -- hl(0, "TelescopeResultsTitle", {fg=darker_black, bg=darker_black})
+  --
+  -- hl(0, "TelescopeSelection", {bg=black2})
 
   -- Disable some highlight in nvim tree if transparency enabled
   hl(0, "NormalFloat", {bg="NONE"})
@@ -145,6 +145,7 @@ M.apply_colors_highlight = function()
   hl(0, "CmpMenuBorder", { fg="#263341" })
   hl(0, "CmpMenu", { bg="#10171f" })
   hl(0, "CmpSelection", { bg="#263341" })
+  hl(0, "WinSeparator", { fg = "#263341" })
 end
 
 return M

@@ -1,4 +1,5 @@
 local M = {}
+local colors = require('colors.scheme')
 
 local capability_settings = {
   completionItem = {
@@ -31,15 +32,17 @@ M.config_handlers = function()
       local hl = "DiagnosticSign" .. name
       vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
     end
-    lspSymbol("Error", "")
-    lspSymbol("Info", "")
-    lspSymbol("Hint", "")
-    lspSymbol("Warn", "")
+    lspSymbol("Error", "󰅙 ")
+    lspSymbol("Info", "󰋼 ")
+    lspSymbol("Hint", "󰌵 ")
+    lspSymbol("Warn", " ")
     -- suppress error messages from lang servers
   end
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {})
   config_diagnostics()
+
+  vim.api.nvim_set_hl(0, "LspInlayHint", {fg=colors.grey_fg, bg='NONE', italic=true})
 end
 
 M.attach = function()

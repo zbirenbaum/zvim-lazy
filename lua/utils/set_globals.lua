@@ -1,6 +1,7 @@
 local g = vim.g
 local o = vim.o
 local opt = vim.opt
+o.rtp = o.rtp .. ",/opt/homebrew/opt/fzf"
 -- lang specific settings
 g.python_recommended_style = 0
 g.rust_recommended_style= 0
@@ -10,12 +11,12 @@ if vim.fn.expand('$DISPLAY') ~= "$DISPLAY" then
   g.clipboard = {
     name = "unnamedplus",
     copy = {
-      ["+"] = "xclip -i -selection clipboard",
-      ["*"] = "xclip -i -selection primary",
+      ["+"] = "pbcopy -pboard clipboard",
+      ["*"] = "pbcopy -pboard primary",
     },
     paste = {
-      ["+"] = "xclip -o -selection clipboard",
-      ["*"] = "xclip -o -selection primary",
+      ["+"] = "pbpaste -pboard clipboard",
+      ["*"] = "pbpaste -pboard primary",
     },
     cache_enabled = 0,
   }
@@ -68,6 +69,8 @@ g.mapleader = " "
 g.loaded_matchparen = 1
 g.python_host_skip_check = 1
 g.python3_host_prog = vim.fn.expand('$HOME') .. "/.virtualenvs/py3nvim/bin/python";
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
 g.mouse = "";
 
 if vim.fn.filereadable(g.python3_host_prog) == 0 then

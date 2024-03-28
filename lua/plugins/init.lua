@@ -28,7 +28,7 @@ local plugins = {
   },
   {
     "nvim-tree/nvim-tree.lua",
-    keys = { '<A-n>' },
+    keys = { '<leader>n' },
     config = function ()
       require('plugins.other.nvim_tree')
     end
@@ -47,17 +47,31 @@ local plugins = {
       })
     end,
   },
-  -- {
-  --   'mrcjkb/rustaceanvim',
-  --   version = '^4', -- Recommended
-  --   ft = { 'rust' },
-  -- },
   {
-    'simrat39/rust-tools.nvim',
-    ft = {'rust'},
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
     config = function ()
-      require('plugins.lsp.rust_tools')
-    end
+      vim.g.rustaceanvim = function()
+        -- Update this path
+        local mason_path = vim.fn.stdpath("data") .. "/mason"
+        local ext_path = mason_path .. "/packages/codelldb/extension"
+        -- local bin = mason_path .. "/bin/codelldb"
+
+        -- Update this path
+        local codelldb_path = ext_path .. '/adapter/codelldb'
+        local liblldb_path = ext_path .. '/lldb/lib/liblldb.so'
+        local this_os = vim.uv.os_uname().sysname;
+        -- The liblldb extension is .so for Linux and .dylib for MacOS
+        liblldb_path = liblldb_path .. (this_os == "Linux" and ".so" or ".dylib")
+        local cfg = require('rustaceanvim.config')
+        return {
+          dap = {
+            adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+          },
+        }
+      end
+    end,
+    ft = { 'rust' },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -91,6 +105,7 @@ local plugins = {
         return { key, mode = { "n", "v", "x", "o" } }
       end, {'x', 's', 'X', 'S'})
     end,
+    commit='9857f64c869f83e36bcde036213c758fc435d9b2',
     config = function()
       require("plugins.other.leap")
     end,
@@ -145,7 +160,6 @@ local plugins = {
             dismiss = "<C-]>",
           },
         },
-        copilot_node_command = "/home/zach/.config/nvm/versions/node/v18.15.0/bin/node",
       })
     end,
   },
