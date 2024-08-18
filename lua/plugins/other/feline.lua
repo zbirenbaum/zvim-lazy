@@ -276,7 +276,10 @@ ct.diagnostics = {
 
 ct.progress = {
   provider = function()
-    local client = vim.lsp.get_active_clients({buf = a.nvim_get_current_buf()})
+    local client = vim.lsp.get_clients({
+      buf = a.nvim_get_current_buf(),
+      active = true,
+    })
     local Lsp = vim.lsp.util.get_progress_messages()[1]
     if Lsp and client and client[1].name ~= "ccls" then
       local msg = Lsp.message or ""
@@ -317,7 +320,7 @@ ct.lsp = {
     local icons = require("plugins.lsp.lsp_configs.langserver_icons")
     local names = vim.tbl_map(function (client)
       return icons and icons[client.name] or client.name
-    end, vim.lsp.get_active_clients({buf = a.nvim_get_current_buf()}))
+    end, vim.lsp.get_clients({buf = a.nvim_get_current_buf(), active=true}))
     return table.concat(names, "")
     -- return "  " .. table.concat(names, '')
   end,

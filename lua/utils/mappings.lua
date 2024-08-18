@@ -21,22 +21,62 @@ end
 
 M.debug_bindings = {
   mappings = {
-    { 'n', "<Leader>b" },
-    { 'n', "<C-o>" },
-    { 'n', "<C-O>" },
-    { 'n', "<C-n>" },
-    { 'n', "<Leader>r" },
-    { 'n', "<Leader>c" },
+    {'n', '<F5>'},
+    {'n', '<F10>'},
+    {'n', '<F11>'},
+    {'n', '<F12>'},
+    {'n', '<Leader>b'},
+    {'n', '<Leader>B'},
+    {'n', '<Leader>lp'},
+    {'n', '<Leader>dr'},
+    {'n', '<Leader>dl'},
+    {{'n', 'v'}, '<Leader>dh'},
+    {{'n', 'v'}, '<Leader>dp'},
+    {'n', '<Leader>df'},
+    {'n', '<Leader>ds'},
   },
   callbacks = {
-    function () require("dap").toggle_breakpoint() end,
-    function () require("dap").step_over() end,
-    function () require("dap").step_out() end,
-    function () require("dap").step_into() end,
-    function () require("dap").repl.toggle() end,
-    function () choose_debug_session() end
+    function () choose_debug_session() end,
+    function () require('dap').step_over() end,
+    function () require('dap').step_into() end,
+    function () require('dap').step_out() end,
+    function () require('dap').toggle_breakpoint() end,
+    function () require('dap').set_breakpoint() end,
+    function () require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+    function () require('dap').repl.open() end,
+    function () require('dap').run_last() end,
+    function ()
+      require('dap.ui.widgets').hover()
+    end,
+    function ()
+      require('dap.ui.widgets').preview()
+    end,
+    function ()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.frames)
+    end,
+    function ()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.scopes)
+    end,
   }
 }
+  -- mappings = {
+  --   { 'n', "<Leader>b" },
+  --   { 'n', "<C-o>" },
+  --   { 'n', "<C-O>" },
+  --   { 'n', "<C-n>" },
+  --   { 'n', "<Leader>r" },
+  --   { 'n', "<Leader>c" },
+  -- },
+  -- callbacks = {
+  --   function () require("dap").toggle_breakpoint() end,
+  --   function () require("dap").step_over() end,
+  --   function () require("dap").step_out() end,
+  --   function () require("dap").step_into() end,
+  --   function () require("dap").repl.toggle() end,
+  --   function () choose_debug_session() end
+  -- }
 
 M.debug = function()
   for index, mapping in pairs(M.debug_bindings.mappings) do
@@ -84,7 +124,7 @@ M.lsp = function ()
   maps({"n"}, "<leader>D", function() lsp.type_definition() end, opts)
   maps({"n"}, "<leader>ra", function() lsp.rename() end, opts)
   maps({"n"}, "<leader>ca", function() lsp.code_action() end, opts)
-  maps({"n"}, "gr", function() lsp.references({}) end, opts)
+  maps({"n"}, "<leader>gr", function() lsp.references({}) end, opts)
   maps({"n"}, "<leader>f", function() diag.open_float() end, opts)
   maps({"n"}, "[d", function() diag.goto_prev() end, opts)
   maps({"n"}, "d]", function() diag.goto_next() end, opts)

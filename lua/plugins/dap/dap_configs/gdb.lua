@@ -12,9 +12,9 @@ dap.configurations.rust = {
     type = "gdb",
     request = "launch",
     program = function()
-      -- return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/')
 
-     return '/home/zach/Dev/tracemachina/nativelink/target/debug/deps/filesystem_store_test-cbada86aad1fcc16'
+     -- return '/home/zach/Dev/tracemachina/nativelink/target/debug/deps/filesystem_store_test-cbada86aad1fcc16'
     end,
     cwd = "${workspaceFolder}",
     stopAtBeginningOfMainSubprogram = false,

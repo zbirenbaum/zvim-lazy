@@ -20,8 +20,8 @@ local function config_js ()
 end
 
 M.config = function()
-  --"cppdbg"-or "codelldb"
-  local adapters = { "python", "lua", "codelldb", "vscode_js"} --list your adapters here
+  --"cpptools",  "codelldb", "codelldb"
+  local adapters = { "python", "lua", "codelldb", "vscode_js", } --list your adapters here
   for _, adapter in ipairs(adapters) do
     require("plugins.dap.dap_configs." .. adapter)
   end
@@ -30,10 +30,10 @@ end
 
 M.config_dapui = function ()
   local dap, dapui = require("dap"), require("dapui")
-
-  dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-  dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-  dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+  dap.listeners.before.attach.dapui_config = function() dapui.open() end
+  dap.listeners.before.launch.dapui_config = function() dapui.open() end
+  -- dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+  -- dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 end
 
 return M

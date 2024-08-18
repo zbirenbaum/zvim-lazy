@@ -1,31 +1,25 @@
-local dap = require("dap")
-
-
-dap.adapters.codelldb = {
-  type = 'server',
-  port = "13000",
-  executable = {
-    command = vim.fn.stdpath('data') .. '/mason/packages/codelldb/extension/adapter/codelldb',
-    args = {"--port", "13000"},
-  }
+local dap = require('dap')
+dap.configurations.cpp = {
+  {
+    name = 'Launch',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    runInTerminal = true,
+  },
 }
 
-local standard_cfg = {
-  name = "Launch file",
-  type = "codelldb",
-  request = "launch",
-  program = function()
-    return vim.fn.input('Path to executable: ', '/home/zach/Dev/tracemachina/nativelink/target/debug/deps/' .. '/', 'file')
-  end,
-  cwd = '${workspaceFolder}',
-  stopOnEntry = false,
-}
-
-dap.configurations.cpp = { standard_cfg }
 dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 
 dap.configurations.rust = {
-  vim.tbl_deep_extend('force', standard_cfg, {
+  {
+    -- ... the previous config goes here ...,
     initCommands = function()
       -- Find out where to look for the pretty printer Python module
       local rustc_sysroot = vim.fn.trim(vim.fn.system('rustc --print sysroot'))
@@ -45,5 +39,5 @@ dap.configurations.rust = {
 
       return commands
     end,
-  })
+  }
 }

@@ -2,7 +2,7 @@ local present, cmp = pcall(require, "cmp")
 if not present then return end
 local luasnip = require("luasnip")
 local symbols = require("plugins.completion.cmp_configs.symbols")
-local copilot_cmp = require("copilot_cmp.comparators")
+local has_cmp_comparators, copilot_cmp = pcall(require, "copilot_cmp.comparators")
 
 local has_words_before = function()
   if vim.api.nvim_get_option_value("buftype", {buf=0}) == "prompt" then return false end
@@ -107,30 +107,30 @@ cmp.setup({
     --keep priority weight at 2 for much closer matches to appear above copilot
     --set to 1 to make copilot always appear on top
     priority_weight = 1,
-    comparators = {
-      -- order matters here
-      cmp.config.compare.exact,
-      cmp.config.compare.offset,
-      copilot_cmp.prioritize,
-      copilot_cmp.score,
-      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.locality,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-      -- personal settings:
-      -- cmp.config.compare.recently_used,
-      -- cmp.config.compare.offset,
-      -- cmp.config.compare.score,
-      -- cmp.config.compare.sort_text,
-      -- cmp.config.compare.length,
-      -- cmp.config.compare.order,
-    },
-  },
-  preselect = cmp.PreselectMode.Item,
+    comparators = vim.tbl_filter(function (v) return v ~= nil end, {
+        -- order matters here
+        cmp.config.compare.exact,
+        cmp.config.compare.offset,
+        has_cmp_comparators and copilot_cmp.prioritize or nil,
+        has_cmp_comparators and copilot_cmp.score or nil,
+        -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+        cmp.config.compare.score,
+        cmp.config.compare.recently_used,
+        cmp.config.compare.locality,
+        cmp.config.compare.kind,
+        cmp.config.compare.sort_text,
+        cmp.config.compare.length,
+        cmp.config.compare.order,
+        -- personal settings:
+        -- cmp.config.compare.recently_used,
+        -- cmp.config.compare.offset,
+        -- cmp.config.compare.score,
+        -- cmp.config.compare.sort_text,
+        -- cmp.config.compare.length,
+        -- cmp.config.compare.order,
+    }),
+    preselect = cmp.PreselectMode.Item,
+  }
 })
 
 --set max height of items
