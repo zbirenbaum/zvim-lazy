@@ -1,23 +1,39 @@
 local g = vim.g
 local o = vim.o
 local opt = vim.opt
-o.rtp = o.rtp .. ",/opt/homebrew/opt/fzf"
+o.rtp = o.rtp .. ',/opt/homebrew/opt/fzf'
 -- lang specific settings
 g.python_recommended_style = 0
 g.rust_recommended_style= 0
 g.solidity_recommended_style= 0
--- clipboard support over ssh
-if vim.fn.expand('$DISPLAY') ~= "$DISPLAY" then
+vim.fn.has('macunix')
+
+local copy_cmds = {
+  ['OSX'] = {
+    ['+'] = 'pbcopy -pboard clipboard',
+    ['*'] = 'pbcopy -pboard primary',
+  },
+  ['Linux'] = {
+    ['+'] = 'xclip -i -selection clipboard',
+    ['*'] = 'xclip -i -selection primary'
+  }
+}
+local paste_cmds = {
+  ['OSX'] = {
+    ['+'] = 'pbpaste -pboard clipboard',
+    ['*'] = 'pbpaste -pboard primary',
+  },
+  ['Linux'] = {
+    ['+'] = 'xclip -o -selection clipboard',
+    ['*'] = 'xclip -o -selection primary'
+  }
+}
+
+if vim.fn.expand('$DISPLAY') ~= '$DISPLAY' then
   g.clipboard = {
-    name = "unnamedplus",
-    copy = {
-      ["+"] = "pbcopy -pboard clipboard",
-      ["*"] = "pbcopy -pboard primary",
-    },
-    paste = {
-      ["+"] = "pbpaste -pboard clipboard",
-      ["*"] = "pbpaste -pboard primary",
-    },
+    name = 'unnamedplus',
+    copy = copy_cmds[jit.os],
+    paste = paste_cmds[jit.os],
     cache_enabled = 0,
   }
 end
@@ -25,15 +41,15 @@ end
 o.showcmd = false
 o.showmode = false
 o.lazyredraw = true
-o.shadafile = vim.fn.expand('$HOME') .. "/.local/share/nvim/shada/main.shada"
+o.shadafile = vim.fn.expand('$HOME') .. '/.local/share/nvim/shada/main.shada'
 o.pumheight = 6
 o.pumwidth = 12
 o.showtabline = 0 -- shown in statusline
 
 opt.laststatus = 3
-opt.clipboard = "unnamedplus"
+opt.clipboard = 'unnamedplus'
 opt.hidden = true
-opt.mouse = ""
+opt.mouse = ''
 
 -- indentation settings
 opt.tabstop = 2
@@ -50,28 +66,28 @@ opt.timeoutlen = 400
 opt.updatetime = 250
 opt.cmdheight = 1
 opt.list = true
-opt.listchars:append("eol:↴")
+opt.listchars:append('eol:↴')
 opt.termguicolors = true
-opt.fillchars = { eob = " " }
+opt.fillchars = { eob = ' ' }
 opt.number = true
 opt.numberwidth = 2
 opt.relativenumber = true
 opt.ruler = false
 opt.undofile = true
 opt.cul = true
-opt.signcolumn = "yes:1"
+opt.signcolumn = 'yes:1'
 opt.splitbelow = true
 opt.splitright = true
-opt.shortmess:append "sI"
+opt.shortmess:append 'sI'
 
 -- globals
-g.mapleader = " "
+g.mapleader = ' '
 g.loaded_matchparen = 1
 g.python_host_skip_check = 1
-g.python3_host_prog = vim.fn.expand('$HOME') .. "/.virtualenvs/py3nvim/bin/python";
+g.python3_host_prog = vim.fn.expand('$HOME') .. '/.virtualenvs/py3nvim/bin/python';
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
-g.mouse = "";
+g.mouse = '';
 
 if vim.fn.filereadable(g.python3_host_prog) == 0 then
   print('Python3 host not found at ' .. g.python3_host_prog)
