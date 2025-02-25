@@ -19,12 +19,11 @@ local plugins = {
   },
   {
     'willothy/flatten.nvim',
-    opts = require('plugins.other.flatten'),
-    cond = function ()
-      return not os.getenv('NVIM') ~= nil
-    end,
     lazy = false,
     priority = 1001,
+    config = function()
+      require('flatten').setup()
+    end
   },
   { 'lewis6991/impatient.nvim'},
   {
@@ -43,14 +42,21 @@ local plugins = {
   {
     'williamboman/mason.nvim',
     config = function()
-      require('mason').setup()
+      require('mason').setup({
+        max_concurrent_installers = 16,
+      })
     end,
   },
   {
     'williamboman/mason-lspconfig.nvim',
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'pyright', 'bashls' }
+        ensure_installed = {
+          'pyright',
+          'bashls',
+          'lua_ls',
+          'rust_analyzer',
+        }
       })
     end,
   },
@@ -169,16 +175,12 @@ local plugins = {
   },
   {
     'zbirenbaum/copilot.lua',
-    branch = 'enterprise-auth',
-    enabled = false,
+    enabled = true,
     config = function()
       require('copilot').setup({
-        connection = {
-          copilot_auth_provider_url = "fake.com",
-        },
         suggestion = {
-          enabled = true,
-          auto_trigger = true,
+          enabled = false,
+          auto_trigger = false,
           debounce = 75,
           keymap = {
             accept = '<M-l>',
@@ -197,7 +199,7 @@ local plugins = {
     config = function ()
       require('copilot_cmp').setup()
     end,
-    enabled = false,
+    enabled = true,
   },
   -- {
   --   'zbirenbaum/neodim',

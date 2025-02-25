@@ -3,10 +3,9 @@ local o = vim.o
 local opt = vim.opt
 o.rtp = o.rtp .. ',/opt/homebrew/opt/fzf'
 -- lang specific settings
-g.python_recommended_style = 0
-g.rust_recommended_style= 0
-g.solidity_recommended_style= 0
-vim.fn.has('macunix')
+g.python_recommended_style = 1
+g.rust_recommended_style= 1
+g.solidity_recommended_style= 1
 
 local copy_cmds = {
   ['OSX'] = {
@@ -56,7 +55,7 @@ opt.tabstop = 2
 opt.softtabstop=-1
 opt.smartindent = true
 opt.shiftwidth = 2
-opt.expandtab = true
+opt.expandtab = false
 opt.smartindent = true
 
 -- misc
