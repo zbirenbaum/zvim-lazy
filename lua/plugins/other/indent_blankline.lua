@@ -24,7 +24,7 @@ require("indent_blankline").setup({
     { nocombine = false, underline = true, special = colors.grey_fg }
   ),
 })
-vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
+-- vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
 
 -- highlight IndentBlanklineContextChar guifg=#00FF00 gui=nocombine
 -- highlight IndentBlanklineContextStart guisp=#00FF00 gui=underline

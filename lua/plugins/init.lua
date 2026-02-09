@@ -50,8 +50,11 @@ local plugins = {
   {
     'williamboman/mason-lspconfig.nvim',
     config = function()
+      require('mason').setup()
       require('mason-lspconfig').setup({
+        automatic_enable = true,
         ensure_installed = {
+          -- 'basedpyright',
           'pyright',
           'bashls',
           'lua_ls',
@@ -157,7 +160,7 @@ local plugins = {
       'folke/neodev.nvim',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'zbirenbaum/copilot.lua',
+      -- 'zbirenbaum/copilot.lua',
     }
   },
   {
@@ -175,23 +178,11 @@ local plugins = {
   },
   {
     'zbirenbaum/copilot.lua',
-    enabled = true,
+    enabled = false,
     config = function()
-      require('copilot').setup({
-        suggestion = {
-          enabled = false,
-          auto_trigger = false,
-          debounce = 75,
-          keymap = {
-            accept = '<M-l>',
-            accept_word = false,
-            accept_line = false,
-            next = '<M-]>',
-            prev = '<M-[>',
-            dismiss = '<C-]>',
-          },
-        },
-      })
+      require("copilot").setup {
+        copilot_model = "gpt-4o-copilot",
+      }
     end,
   },
   {
@@ -227,6 +218,7 @@ local plugins = {
     config = function()
       require('plugins.completion.cmp_configs.lspsignature_cmp')
     end,
+    -- commit='b58cca003d1d3311213d6db0352f58d8e57bfff0'
   },
   {
     'folke/neodev.nvim',
@@ -397,15 +389,4 @@ local plugins = {
   { 'mxsdev/nvim-dap-vscode-js', lazy = true },
   { 'nvim-neotest/nvim-nio', lazy = true }
 }
-
--- vim.api.nvim_create_autocmd("LspAttach", {
---   callback = function(args)
---     local bufnr = args.buf
---     local client = vim.lsp.get_client_by_id(args.data.client_id)
---     if client and client.supports_method("textDocument/completion") then
---       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
---     end
---   end
--- })
-
 return plugins

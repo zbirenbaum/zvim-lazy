@@ -16,15 +16,16 @@ M.setup_lsp = function()
   lsp_setup.config_handlers()
   local attach = lsp_setup.attach()
   local capabilities = lsp_setup.setup_capabilities()
-  local lspconfig = require("lspconfig")
-  local default_servers = { "gopls" }
+  local default_servers = { "gopls", "ts_ls", "basedpyright" }
   local custom_servers = {
     -- "graphql",
     "solidity",
     -- "eslint",
     "lua_ls",
     "bashls",
-    "pyright",
+    "basedpyright",
+    -- "ty",
+    -- "pyright",
     -- "pylance",
     "ccls",
     -- "pylyzer",
@@ -44,13 +45,13 @@ M.setup_lsp = function()
   for _, lsp in ipairs(custom_servers) do
     local present, config = pcall(require, "plugins.lsp.lsp_configs." .. lsp)
     if present then
-      lspconfig[lsp].setup(config.config_table(attach, capabilities))
+      vim.lsp.config(lsp, config.config_table(attach, capabilities))
     else
-      lspconfig[lsp].setup(default_config)
+      vim.lsp.config(lsp, default_config)
     end
   end
   for _, lsp in ipairs(default_servers) do
-    lspconfig[lsp].setup(default_config)
+      vim.lsp.config(lsp, default_config)
   end
 end
 

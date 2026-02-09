@@ -55,7 +55,7 @@ opt.tabstop = 2
 opt.softtabstop=-1
 opt.smartindent = true
 opt.shiftwidth = 2
-opt.expandtab = false
+opt.expandtab = true
 opt.smartindent = true
 
 -- misc
