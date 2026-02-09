@@ -218,6 +218,9 @@ local plugins = {
     -- optional: provides snippets for the snippet source
     dependencies = { 'rafamadriz/friendly-snippets' },
     build = "cargo build --release",
+    config = function ()
+      require('plugins.completion.blink_configs.blink')
+    end,
     opts = {
       -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
       -- 'super-tab' for mappings similar to vscode (tab to accept)
@@ -240,11 +243,21 @@ local plugins = {
       },
       completion = { documentation = { auto_show = false } },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        per_filetype = {
+          markdown = {},
+        },
+        -- default = { 'lsp', 'path', 'snippets', 'buffer' },
+        -- default = { 'lsp', 'path', 'snippets' },
+        transform_items = function(ctx, items)
+          -- Remove the "Text" source from lsp autocomplete
+          return vim.tbl_filter(function(item)
+            return item.kind ~= vim.lsp.protocol.CompletionItemKind.Text
+          end, items)
+        end,
       },
       fuzzy = { implementation = "prefer_rust_with_warning" }
     },
-    opts_extend = { "sources.default" }
+    -- opts_extend = { "sources.default" }
   },
   {
     'ray-x/lsp_signature.nvim',
