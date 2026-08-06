@@ -146,10 +146,10 @@ local plugins = {
   },
   {'tpope/vim-repeat'},
   -- LSP and Completion
-  {
-    'jose-elias-alvarez/typescript.nvim',
-    lazy = true,
-  },
+  -- {
+  --   'jose-elias-alvarez/typescript.nvim', -- No longer exists
+  --   lazy = true,
+  -- },
   {
     'neovim/nvim-lspconfig',
     event = {'VimEnter'},
@@ -216,7 +216,10 @@ local plugins = {
   {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'saghen/blink.lib',
+    },
     build = "cargo build --release",
     config = function ()
       require('plugins.completion.blink_configs.blink')
@@ -436,3 +439,4 @@ local plugins = {
   { 'nvim-neotest/nvim-nio', lazy = true }
 }
 return plugins
+

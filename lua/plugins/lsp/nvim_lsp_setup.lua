@@ -1,6 +1,12 @@
 local M = {}
 local colors = require('colors.scheme')
 
+local function with(handler, defaults)
+  return function(err, result, ctx, config)
+    return handler(err, result, ctx, vim.tbl_deep_extend("force", config or {}, defaults))
+  end
+end
+
 local capability_settings = {
   completionItem = {
     documentationFormat = { "markdown", "plaintext" },
@@ -59,8 +65,8 @@ M.config_handlers = function()
     })
     -- suppress error messages from lang servers
   end
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  vim.lsp.handlers["textDocument/hover"] = with(vim.lsp.handlers.hover, { border = "single" })
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,
   })
   config_diagnostics()
